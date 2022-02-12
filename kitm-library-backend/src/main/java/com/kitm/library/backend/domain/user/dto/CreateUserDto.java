@@ -1,5 +1,6 @@
 package com.kitm.library.backend.domain.user.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -12,6 +13,7 @@ import java.util.Collection;
  * @since 12.02.22
  */
 @Data
+@Builder
 public class CreateUserDto {
   @NotBlank
   String name;
@@ -21,6 +23,12 @@ public class CreateUserDto {
 
   @NotBlank
   String username;
+
+  @NotBlank
+  String passwordOriginal;
+
+  @NotBlank
+  String passwordConfirmation;
 
   Collection<String> roles;
 }

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  */
 @Tag(name = "Role")
 @RestController
-@RequestMapping(path ="/api/role")
+@RequestMapping(path ="api/role")
 public class RoleController {
   private final RoleService roleService;
 
@@ -26,14 +26,14 @@ public class RoleController {
     this.roleService = roleService;
   }
 
-  @GetMapping("/")
+  @GetMapping
   public List<RoleDto> findAll() {
     return roleService.findAll().stream()
         .map(RoleDto::from)
         .collect(Collectors.toList());
   }
 
-  @PostMapping("/")
+  @PostMapping
   public ResponseEntity<RoleDto> createOne(@RequestBody CreateRoleDto createRoleDto) {
     final RoleEntity roleEntity = roleService.createOne(createRoleDto.getName());
     return ResponseEntity.ok(RoleDto.from(roleEntity));

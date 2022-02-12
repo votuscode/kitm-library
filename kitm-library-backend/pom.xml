@@ -73,6 +73,12 @@
       <optional>true</optional>
     </dependency>
 
+    <!-- JWT library for authentication -->
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt</artifactId>
+    </dependency>
+
     <!-- Jaxb for xml serialization/deserialization -->
     <dependency>
       <groupId>jakarta.xml.bind</groupId>
@@ -87,6 +93,18 @@
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-ui</artifactId>
+    </dependency>
+
+    <!--Force this version, otherwise epic fail crash!-->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.12.4</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.12.4</version>
     </dependency>
 
   </dependencies>

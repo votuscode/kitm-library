@@ -21,17 +21,17 @@ public class WebConfig implements WebMvcConfigurer {
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("", "/", UI_CONTEXT_PATH, UI_CONTEXT_PATH + "/", UI_CONTEXT_PATH + "/**")
-        .addResourceLocations("classpath:/com/kitm/library/admin/")
-        .resourceChain(false)
-        .addResolver(new PathResourceResolver() {
-          @Override
-          protected Resource getResource(String resourcePath, Resource location) throws IOException {
-            System.out.println(resourcePath);
-            Resource requestedResource = location.createRelative(resourcePath);
-            boolean resourceFound = requestedResource.exists() && requestedResource.isReadable();
-            return resourceFound ? requestedResource : new ClassPathResource("/com/kitm/library/admin/index.html");
-          }
-        });
+//    registry.addResourceHandler("", "/", UI_CONTEXT_PATH, UI_CONTEXT_PATH + "/", UI_CONTEXT_PATH + "/**")
+//        .addResourceLocations("classpath:/com/kitm/library/admin/")
+//        .resourceChain(false)
+//        .addResolver(new PathResourceResolver() {
+//          @Override
+//          protected Resource getResource(String resourcePath, Resource location) throws IOException {
+//            System.out.println(resourcePath);
+//            Resource requestedResource = location.createRelative(resourcePath);
+//            boolean resourceFound = requestedResource.exists() && requestedResource.isReadable();
+//            return resourceFound ? requestedResource : new ClassPathResource("/com/kitm/library/admin/index.html");
+//          }
+//        });
   }
 }

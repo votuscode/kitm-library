@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  */
 @Tag(name = "User")
 @RestController()
-@RequestMapping(path = "/api/user")
+@RequestMapping(path = "api/user")
 public class UserController {
   private final UserService userService;
 
@@ -27,14 +27,14 @@ public class UserController {
     this.userService = userService;
   }
 
-  @GetMapping("/")
+  @GetMapping
   public List<UserDto> getAll() {
     return userService.findAll().stream()
         .map(UserDto::from)
         .collect(Collectors.toList());
   }
 
-  @PostMapping("/")
+  @PostMapping
   public ResponseEntity<UserDto> createOne(@RequestBody CreateUserDto createUserDto) {
     final UserEntity userEntity = userService.createOne(createUserDto);
     return ResponseEntity.ok(UserDto.from(userEntity));
