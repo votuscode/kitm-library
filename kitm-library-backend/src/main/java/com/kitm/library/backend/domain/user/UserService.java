@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author votuscode (https://github.com/votuscode)
@@ -31,14 +34,14 @@ public class UserService {
   }
 
   public UserEntity createOne(CreateUserDto createUserDto) {
-    final Collection<RoleEntity> roleEntities = createUserDto.roles().stream()
+    final Set<RoleEntity> roleEntities = createUserDto.getRoles().stream()
         .map(roleRepository::findRoleEntityByName)
-        .toList();
+        .collect(Collectors.toUnmodifiableSet());
 
     final UserEntity userEntity = UserEntity.builder()
-        .name(createUserDto.name())
-        .email(createUserDto.email())
-        .username(createUserDto.username())
+        .name(createUserDto.getName())
+        .email(createUserDto.getEmail())
+        .username(createUserDto.getUsername())
         .roles(roleEntities)
         .build();
 
