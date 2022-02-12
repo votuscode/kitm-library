@@ -2,6 +2,7 @@ package com.kitm.library.backend.domain.user;
 
 import com.kitm.library.backend.domain.role.RoleEntity;
 import com.kitm.library.backend.domain.role.RoleRepository;
+import com.kitm.library.backend.domain.user.dto.CreateUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,15 +30,15 @@ public class UserService {
     return userRepository.findAll();
   }
 
-  public UserEntity createOne(String name, String email, String username, Collection<String> roles) {
-    final Collection<RoleEntity> roleEntities = roles.stream()
+  public UserEntity createOne(CreateUserDto createUserDto) {
+    final Collection<RoleEntity> roleEntities = createUserDto.roles().stream()
         .map(roleRepository::findRoleEntityByName)
         .toList();
 
     final UserEntity userEntity = UserEntity.builder()
-        .name(name)
-        .email(email)
-        .username(username)
+        .name(createUserDto.name())
+        .email(createUserDto.email())
+        .username(createUserDto.username())
         .roles(roleEntities)
         .build();
 

@@ -18,6 +18,8 @@
     <maven.compiler.target>16</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <start.class>com.kitm.library.backend.LibraryBackend</start.class>
+    <spring.boot.version>2.5.4</spring.boot.version>
   </properties>
 
   <dependencyManagement>
@@ -25,22 +27,22 @@
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot</artifactId>
-        <version>2.5.0</version>
+        <version>${spring.boot.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-data-jpa</artifactId>
-        <version>2.5.4</version>
+        <version>${spring.boot.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-jetty</artifactId>
-        <version>2.5.0</version>
+        <version>${spring.boot.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
-        <version>2.5.0</version>
+        <version>${spring.boot.version}</version>
       </dependency>
       <dependency>
         <artifactId>kitm-library-admin</artifactId>
@@ -75,4 +77,22 @@
     </dependencies>
   </dependencyManagement>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>${start.class}</mainClass>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
