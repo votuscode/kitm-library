@@ -5,9 +5,8 @@
 ## Directory-based project format:
 .idea/
 .mvn/
-mvnw
-mvnw.cmd
 
 # "temporary" build files
 /**/target
 
+/application.properties
