@@ -27,13 +27,13 @@ import static java.lang.String.format;
 public class JwtTokenUtil {
 
   @Value("${jwt.secret}")
-  private final String jwtSecret;
+  private String jwtSecret;
 
   @Value("${jwt.issuer}")
-  private final String jwtIssuer;
+  private String jwtIssuer;
 
   @Value("${jwt.expiration}")
-  private final Long jwtExpiration;
+  private String jwtExpiration;
 
   private final Logger logger;
 
@@ -42,7 +42,7 @@ public class JwtTokenUtil {
         .setSubject(format("%s,%s", userEntity.getId(), userEntity.getUsername()))
         .setIssuer(jwtIssuer)
         .setIssuedAt(new Date())
-        .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
+        .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(jwtExpiration)))
         .signWith(SignatureAlgorithm.HS512, jwtSecret)
         .compact();
   }

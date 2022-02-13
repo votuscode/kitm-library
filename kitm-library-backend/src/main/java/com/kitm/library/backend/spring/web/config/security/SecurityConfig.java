@@ -1,4 +1,4 @@
-package com.kitm.library.backend.spring.web.config;
+package com.kitm.library.backend.spring.web.config.security;
 
 import com.kitm.library.backend.domain.user.UserRepository;
 import com.kitm.library.backend.spring.web.config.security.JwtTokenFilter;
@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Value("${springdoc.api-docs.path}")
   private String restApiDocPath;
+
   @Value("${springdoc.swagger-ui.path}")
   private String swaggerPath;
 
