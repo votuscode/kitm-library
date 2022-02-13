@@ -4,7 +4,6 @@ import com.kitm.library.backend.authentication.dto.AuthenticatedDto;
 import com.kitm.library.backend.authentication.dto.LoginDto;
 import com.kitm.library.backend.domain.user.UserEntity;
 import com.kitm.library.backend.spring.web.config.security.JwtTokenUtil;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,6 @@ import java.util.Date;
  * @version 1.0
  * @since 12.02.22
  */
-@Tag(name = "Authentication")
 @RestController
 @RequestMapping(path = "api/public")
 @AllArgsConstructor

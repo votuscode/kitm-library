@@ -12,15 +12,12 @@
   <artifactId>kitm-library-backend</artifactId>
 
   <properties>
-    <maven.compiler.source>16</maven.compiler.source>
-    <maven.compiler.target>16</maven.compiler.target>
-    <jackson.version>2.12.4</jackson.version>
   </properties>
 
   <dependencies>
     <dependency>
-      <artifactId>kitm-library-admin</artifactId>
       <groupId>com.kitm</groupId>
+      <artifactId>kitm-library-admin</artifactId>
     </dependency>
 
     <dependency>
@@ -92,29 +89,83 @@
 
     <!-- Swagger for rest documentation -->
     <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-ui</artifactId>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-core</artifactId>
+      <scope>compile</scope>
+      <version>1.5.3</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.ws.rs</groupId>
+          <artifactId>jsr311-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
-    <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-swagger2</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-swagger-ui</artifactId>
-   </dependency>
 
     <!-- Specify jackson version to fix failing builds. -->
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>${jackson.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
-      <version>${jackson.version}</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--      <artifactId>jackson-databind</artifactId>-->
+<!--      <version>${jackson.version}</version>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--      <artifactId>jackson-core</artifactId>-->
+<!--      <version>${jackson.version}</version>-->
+<!--    </dependency>-->
+<!--  </dependencies>-->
 
-  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.github.kongchen</groupId>
+        <artifactId>swagger-maven-plugin</artifactId>
+        <version>${swagger-maven-plugin-version}</version>
+        <configuration>
+          <apiSources>
+            <apiSource>
+              <springmvc>true</springmvc>
+              <locations>
+                <location>com.kitm.library.backend.domain</location>
+              </locations>
+              <schemes>http,https</schemes>
+              <host>library.kitm.com</host>
+              <basePath>/api</basePath>
+              <info>
+                <title>KITM Library API</title>
+                <version>${kitm.library.version}</version>
+              </info>
+              <swaggerDirectory>${project.build.directory}/generated-swagger-json</swaggerDirectory>
+              <outputFormats>json</outputFormats>
+            </apiSource>
+          </apiSources>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+<!--      <plugin>-->
+<!--        <artifactId>maven-assembly-plugin</artifactId>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>make-swagger-meta</id>-->
+<!--            <phase>package</phase>-->
+<!--            <goals>-->
+<!--              <goal>single</goal>-->
+<!--            </goals>-->
+<!--            <configuration>-->
+<!--              <descriptors>-->
+<!--                <descriptor>src/main/resources/assembly/swagger-json-assembly.xml</descriptor>-->
+<!--              </descriptors>-->
+<!--            </configuration>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
+    </plugins>
+  </build>
 </project>

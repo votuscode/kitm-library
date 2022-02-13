@@ -2,7 +2,6 @@ package com.kitm.library.backend.domain.role;
 
 import com.kitm.library.backend.domain.role.dto.CreateRoleDto;
 import com.kitm.library.backend.domain.role.dto.RoleDto;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +14,6 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 24.09.21
  */
-@Tag(name = "Role")
 @RestController
 @RequestMapping(path ="api/role")
 public class RoleController {
@@ -27,14 +25,14 @@ public class RoleController {
   }
 
   @GetMapping
-  public List<RoleDto> findAll() {
+  public List<RoleDto> getRoles() {
     return roleService.findAll().stream()
         .map(RoleDto::from)
         .collect(Collectors.toList());
   }
 
   @PostMapping
-  public ResponseEntity<RoleDto> createOne(@RequestBody CreateRoleDto createRoleDto) {
+  public ResponseEntity<RoleDto> createRole(@RequestBody CreateRoleDto createRoleDto) {
     final RoleEntity roleEntity = roleService.createOne(createRoleDto.getName());
     return ResponseEntity.ok(RoleDto.from(roleEntity));
   }

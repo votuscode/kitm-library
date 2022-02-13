@@ -14,12 +14,15 @@
   </modules>
 
   <properties>
+    <kitm.library.version>1.0-SNAPSHOT</kitm.library.version>
     <maven.compiler.source>16</maven.compiler.source>
     <maven.compiler.target>16</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <start.class>com.kitm.library.backend.LibraryBackend</start.class>
     <spring.boot.version>2.5.4</spring.boot.version>
+    <swagger-maven-plugin-version>3.1.8</swagger-maven-plugin-version>
+    <jackson.version>2.12.4</jackson.version>
   </properties>
 
   <licenses>
@@ -120,23 +123,6 @@
         <version>0.9.1</version>
       </dependency>
 
-      <!-- Swagger for rest documentation -->
-      <dependency>
-        <groupId>org.springdoc</groupId>
-        <artifactId>springdoc-openapi-ui</artifactId>
-        <version>1.6.4</version>
-      </dependency>
-      <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-swagger2</artifactId>
-        <version>2.6.1</version>
-      </dependency>
-      <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-swagger-ui</artifactId>
-        <version>2.6.1</version>
-      </dependency>
-
       <!-- Mapper library to automate model transformations -->
       <!-- https://www.baeldung.com/java-performance-mapping-frameworks -->
       <dependency>
@@ -148,6 +134,21 @@
   </dependencyManagement>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
@@ -170,8 +171,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.5.1</version>
         <configuration>
-          <source>16</source>
-          <target>16</target>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
           <annotationProcessorPaths>
             <path>
               <groupId>org.projectlombok</groupId>

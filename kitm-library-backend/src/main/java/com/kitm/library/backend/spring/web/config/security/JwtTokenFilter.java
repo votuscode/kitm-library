@@ -3,7 +3,7 @@ package com.kitm.library.backend.spring.web.config.security;
 import com.kitm.library.backend.domain.user.UserEntity;
 import com.kitm.library.backend.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.codehaus.plexus.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

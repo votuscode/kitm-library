@@ -39,7 +39,7 @@ import static java.lang.String.format;
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final Logger logger;
+//  private final Logger logger;
   private final UserRepository userRepository;
   private final JwtTokenFilter jwtTokenFilter;
 
@@ -49,10 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Value("${springdoc.swagger-ui.path}")
   private String swaggerPath;
 
-  public SecurityConfig(Logger logger, UserRepository userRepository, JwtTokenFilter jwtTokenFilter) {
+  public SecurityConfig(UserRepository userRepository, JwtTokenFilter jwtTokenFilter) {
     super();
 
-    this.logger = logger;
+//    this.logger = logger;
     this.userRepository = userRepository;
     this.jwtTokenFilter = jwtTokenFilter;
 
@@ -89,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .exceptionHandling()
         .authenticationEntryPoint(
             (request, response, ex) -> {
-              logger.error("Unauthorized request - {}", ex.getMessage());
+//              logger.error("Unauthorized request - {}", ex.getMessage());
               response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
             }
         )

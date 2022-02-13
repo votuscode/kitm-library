@@ -1,6 +1,6 @@
 package com.kitm.library.backend;
 
-import com.google.inject.internal.util.ImmutableSet;
+import com.google.common.collect.ImmutableSet;
 import com.kitm.library.backend.domain.role.RoleService;
 import com.kitm.library.backend.domain.user.UserService;
 import com.kitm.library.backend.domain.user.dto.CreateUserDto;

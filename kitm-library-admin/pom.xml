@@ -17,14 +17,53 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>org.codehaus.mojo</groupId>
-      <artifactId>exec-maven-plugin</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.kitm</groupId>-->
+<!--      <artifactId>kitm-library-backend</artifactId>-->
+<!--      <version>${kitm.library.version}</version>-->
+<!--      <classifier>swagger-meta</classifier>-->
+<!--      <type>zip</type>-->
+<!--      <exclusions>-->
+<!--        <exclusion>-->
+<!--          <groupId>*</groupId>-->
+<!--          <artifactId>*</artifactId>-->
+<!--        </exclusion>-->
+<!--      </exclusions>-->
+<!--      <optional>true</optional>-->
+<!--    </dependency>-->
   </dependencies>
 
   <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.1</version>
+        <executions>
+          <execution>
+            <id>unpack-swagger-kitm-library-backend</id>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>com.kitm.library</groupId>
+                  <artifactId>kitm-library-backend</artifactId>
+                  <classifier>swagger-meta</classifier>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}/swagger/kitm-library/backend</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+
     <outputDirectory>target/dist/</outputDirectory>
+
     <resources>
       <resource>
         <directory>var/resources</directory>
@@ -48,6 +87,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
+            <version>3.0.0</version>
             <executions>
               <execution>
                 <id>npm install</id>
