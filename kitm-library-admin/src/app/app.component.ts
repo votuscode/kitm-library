@@ -1,8 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { BehaviorSubject, NEVER } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { RoleDto, RoleService } from 'src/app/api/role.service';
-import { UserDto, UserService } from 'src/app/api/user.service';
+import { AuthenticationService } from '@api/api/authentication.service';
+import { RoleService } from '@api/api/role.service';
+import { UserService } from '@api/api/user.service';
+import { RoleDto } from '@api/model/roleDto';
+import { UserDto } from '@api/model/userDto';
+import { BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { AuthenticationFacade } from '~/app/authentication.facade';
+import { ToastService } from '~/app/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -17,46 +22,49 @@ export class AppComponent implements OnInit {
   readonly roles$ = new BehaviorSubject<RoleDto[]>([]);
   readonly users$ = new BehaviorSubject<UserDto[]>([]);
 
-  constructor(readonly roleService: RoleService, readonly userService: UserService) {
+  constructor(
+    readonly roleService: RoleService,
+    readonly userService: UserService,
+    readonly authenticationService: AuthenticationService,
+    readonly authenticationFacade: AuthenticationFacade,
+    readonly toastService: ToastService,
+  ) {
   }
 
   ngOnInit() {
-    this.findRoles();
-    this.findUsers();
+    this.authenticationService.login({ username: 'admin', password: 'secret' }).pipe(
+      tap(({ token }) => {
+        this.authenticationFacade.token$.next(token);
+        this.toastService.success('Login successful.');
+        this.findRoles();
+        this.findUsers();
+      }),
+    ).subscribe();
   }
 
-  whenFailed = (message: string) => catchError((err: Error) => {
-    alert(message);
-    console.warn(message, err.message);
-    return NEVER;
-  });
-
   findRoles = () => {
-    this.roleService.findAll().pipe(
+    this.roleService.getRoles().pipe(
       tap(roles => {
         this.roles$.next(roles);
       }),
-      this.whenFailed('Could not get find roles.'),
     ).subscribe();
   };
 
   findUsers = () => {
-    this.userService.findAll().pipe(
+    this.userService.getUsers().pipe(
       tap(users => {
         this.users$.next(users);
       }),
-      this.whenFailed('Could not get find users.'),
     ).subscribe();
   };
 
   createRoles = () => {
-    ['ADMIN', 'USER'].forEach(name => {
-      this.roleService.createOne({ name }).pipe(
+    ['SUPER', 'USER'].forEach(name => {
+      this.roleService.createRole({ name }).pipe(
         tap(() => {
           this.findRoles();
           this.findUsers();
         }),
-        this.whenFailed('Could not get create roles.'),
       ).subscribe();
     });
   };
@@ -67,7 +75,7 @@ export class AppComponent implements OnInit {
         name: 'Diego del Morao',
         email: 'diego.del.morao@admin.com',
         username: 'diego.del.morao',
-        roles: ['ADMIN'],
+        roles: ['SUPER'],
       },
       {
         name: 'John Doe',
@@ -84,12 +92,15 @@ export class AppComponent implements OnInit {
     ];
 
     users.forEach(user => {
-      this.userService.createOne(user).pipe(
+      this.userService.createUser({
+        ...user,
+        passwordOriginal: 'secret',
+        passwordConfirmation: 'secret',
+      }).pipe(
         tap(() => {
           this.findRoles();
           this.findUsers();
         }),
-        this.whenFailed('Could not get create users.'),
       ).subscribe();
     });
   };

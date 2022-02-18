@@ -1,5 +1,6 @@
 package com.kitm.library.backend.spring.web.config.security;
 
+import com.kitm.library.backend.domain.authentication.JwtTokenUtil;
 import com.kitm.library.backend.domain.user.UserEntity;
 import com.kitm.library.backend.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,10 @@
 package com.kitm.library.api.user.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -14,21 +17,29 @@ import java.util.Collection;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CreateUserDto {
   @NotBlank
+  @JsonProperty("name")
   String name;
 
   @NotBlank @Email
+  @JsonProperty("email")
   String email;
 
   @NotBlank
+  @JsonProperty("username")
   String username;
 
   @NotBlank
+  @JsonProperty("passwordOriginal")
   String passwordOriginal;
 
   @NotBlank
+  @JsonProperty("passwordConfirmation")
   String passwordConfirmation;
 
+  @JsonProperty("roles")
   Collection<String> roles;
 }

@@ -1,8 +1,7 @@
 package com.kitm.library.backend.spring.web.config.security;
 
 import com.kitm.library.backend.domain.user.UserRepository;
-import com.kitm.library.backend.spring.web.config.security.JwtTokenFilter;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -24,6 +23,8 @@ import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.logging.Logger;
+
 import static java.lang.String.format;
 
 /**
@@ -31,6 +32,7 @@ import static java.lang.String.format;
  * @version 1.0
  * @since 12.02.22
  */
+@Slf4j
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
     securedEnabled = true,
@@ -39,7 +41,7 @@ import static java.lang.String.format;
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//  private final Logger logger;
+  //  private final Logger logger;
   private final UserRepository userRepository;
   private final JwtTokenFilter jwtTokenFilter;
 
@@ -52,7 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   public SecurityConfig(UserRepository userRepository, JwtTokenFilter jwtTokenFilter) {
     super();
 
-//    this.logger = logger;
     this.userRepository = userRepository;
     this.jwtTokenFilter = jwtTokenFilter;
 
@@ -87,12 +88,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // Set unauthorized requests exception handler
     http = http
         .exceptionHandling()
-        .authenticationEntryPoint(
-            (request, response, ex) -> {
-//              logger.error("Unauthorized request - {}", ex.getMessage());
-              response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
-            }
-        )
+        .authenticationEntryPoint((request, response, ex) -> {
+          log.error("Unauthorized request - {}", ex.getMessage());
+          response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
+        })
         .and();
 
     // Set permissions on endpoints

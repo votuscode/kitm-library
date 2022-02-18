@@ -3,12 +3,11 @@ package com.kitm.library.backend.domain.role;
 import com.kitm.library.api.role.IRoleService;
 import com.kitm.library.api.role.dto.CreateRoleDto;
 import com.kitm.library.api.role.dto.RoleDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author votuscode (https://github.com/votuscode)
@@ -17,13 +16,9 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
+@AllArgsConstructor
 public class RoleService implements IRoleService {
   private final RoleRepository roleRepository;
-
-  @Autowired
-  public RoleService(RoleRepository roleRepository) {
-    this.roleRepository = roleRepository;
-  }
 
   @Override
   public List<RoleDto> findAll() {
@@ -32,7 +27,6 @@ public class RoleService implements IRoleService {
         .toList();
   }
 
-  @Transactional
   @Override
   public RoleDto createOne(CreateRoleDto createRoleDto) {
     final RoleEntity roleEntity = RoleEntity.builder()

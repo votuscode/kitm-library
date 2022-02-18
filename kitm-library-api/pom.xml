@@ -64,12 +64,6 @@
       <artifactId>jjwt</artifactId>
     </dependency>
 
-    <!-- Jaxb for xml serialization/deserialization -->
-<!--    <dependency>-->
-<!--      <groupId>jakarta.xml.bind</groupId>-->
-<!--      <artifactId>jakarta.xml.bind-api</artifactId>-->
-<!--    </dependency>-->
-
     <!-- Swagger for rest documentation -->
     <dependency>
       <groupId>io.swagger</groupId>
@@ -98,9 +92,6 @@
               <locations>
                 <location>com.kitm.library.api</location>
               </locations>
-              <schemes>http,https</schemes>
-              <host>library.kitm.com</host>
-              <basePath>/api</basePath>
               <info>
                 <title>KITM Library API</title>
                 <version>${project.version}</version>

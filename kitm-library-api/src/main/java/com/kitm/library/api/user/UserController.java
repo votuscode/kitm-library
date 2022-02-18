@@ -4,7 +4,7 @@ import com.kitm.library.api.user.dto.CreateUserDto;
 import com.kitm.library.api.user.dto.UserDto;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,17 +17,17 @@ import java.util.Collection;
  */
 @Api(value = "User")
 @RestController()
-@RequestMapping(path = "api/user")
+@RequestMapping(path = "/api/user")
 @AllArgsConstructor
 public class UserController {
   private final IUserService userService;
 
-  @GetMapping
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public Collection<UserDto> getUsers() {
     return userService.findAll().stream().toList();
   }
 
-  @PostMapping
+  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public UserDto createUser(@RequestBody @Valid CreateUserDto createUserDto) {
     return userService.createOne(createUserDto);
   }

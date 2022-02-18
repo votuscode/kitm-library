@@ -1,7 +1,7 @@
-package com.kitm.library.backend.spring.web.config.security;
+package com.kitm.library.backend.domain.authentication;
 
-import com.kitm.library.api.authentication.IJwtTokenUtil;
 import com.kitm.library.api.user.IUserEntity;
+import com.kitm.library.backend.domain.user.UserEntity;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +16,7 @@ import java.util.Date;
  */
 @Component
 @RequiredArgsConstructor
-public class JwtTokenUtil implements IJwtTokenUtil {
+public class JwtTokenUtil {
 
   @Value("${jwt.secret}")
   private String jwtSecret;
@@ -27,10 +27,9 @@ public class JwtTokenUtil implements IJwtTokenUtil {
   @Value("${jwt.expiration}")
   private String jwtExpiration;
 
-  @Override
-  public String generateAccessToken(IUserEntity userEntity) {
+  public String generateAccessToken(UserEntity userEntity) {
     return Jwts.builder()
-        .setSubject(String.format("%s", userEntity.getUsername()))
+        .setSubject(String.format("%s,%s", userEntity.getId(), userEntity.getUsername()))
         .setIssuer(jwtIssuer)
         .setIssuedAt(new Date())
         .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(jwtExpiration)))
@@ -38,7 +37,6 @@ public class JwtTokenUtil implements IJwtTokenUtil {
         .compact();
   }
 
-  @Override
   public String getUserId(String token) {
     Claims claims = Jwts.parser()
         .setSigningKey(jwtSecret)
@@ -57,7 +55,6 @@ public class JwtTokenUtil implements IJwtTokenUtil {
     return claims.getSubject().split(",")[1];
   }
 
-  @Override
   public Date getExpirationDate(String token) {
     Claims claims = Jwts.parser()
         .setSigningKey(jwtSecret)
@@ -67,7 +64,6 @@ public class JwtTokenUtil implements IJwtTokenUtil {
     return claims.getExpiration();
   }
 
-  @Override
   public boolean validate(String token) {
     try {
       Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
@@ -85,5 +81,4 @@ public class JwtTokenUtil implements IJwtTokenUtil {
     }
     return false;
   }
-
 }

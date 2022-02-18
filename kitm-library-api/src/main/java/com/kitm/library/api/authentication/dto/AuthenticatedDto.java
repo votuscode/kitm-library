@@ -13,5 +13,6 @@ import java.util.Date;
 @Data
 @Builder
 public class AuthenticatedDto {
+  private String token;
   private Date expires;
 }
