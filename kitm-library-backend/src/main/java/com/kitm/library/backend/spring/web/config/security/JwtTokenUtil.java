@@ -1,6 +1,7 @@
 package com.kitm.library.backend.spring.web.config.security;
 
-import com.kitm.library.backend.domain.user.UserEntity;
+import com.kitm.library.api.authentication.IJwtTokenUtil;
+import com.kitm.library.api.user.IUserEntity;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +16,7 @@ import java.util.Date;
  */
 @Component
 @RequiredArgsConstructor
-public class JwtTokenUtil {
+public class JwtTokenUtil implements IJwtTokenUtil {
 
   @Value("${jwt.secret}")
   private String jwtSecret;
@@ -26,9 +27,10 @@ public class JwtTokenUtil {
   @Value("${jwt.expiration}")
   private String jwtExpiration;
 
-  public String generateAccessToken(UserEntity userEntity) {
+  @Override
+  public String generateAccessToken(IUserEntity userEntity) {
     return Jwts.builder()
-        .setSubject(String.format("%s,%s", userEntity.getId(), userEntity.getUsername()))
+        .setSubject(String.format("%s", userEntity.getUsername()))
         .setIssuer(jwtIssuer)
         .setIssuedAt(new Date())
         .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(jwtExpiration)))
@@ -36,6 +38,7 @@ public class JwtTokenUtil {
         .compact();
   }
 
+  @Override
   public String getUserId(String token) {
     Claims claims = Jwts.parser()
         .setSigningKey(jwtSecret)
@@ -54,6 +57,7 @@ public class JwtTokenUtil {
     return claims.getSubject().split(",")[1];
   }
 
+  @Override
   public Date getExpirationDate(String token) {
     Claims claims = Jwts.parser()
         .setSigningKey(jwtSecret)
@@ -63,6 +67,7 @@ public class JwtTokenUtil {
     return claims.getExpiration();
   }
 
+  @Override
   public boolean validate(String token) {
     try {
       Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);

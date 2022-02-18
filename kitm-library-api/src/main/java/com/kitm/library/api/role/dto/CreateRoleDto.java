@@ -1,5 +1,6 @@
-package com.kitm.library.backend.domain.role.dto;
+package com.kitm.library.api.role.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotBlank;
  * @since 12.02.22
  */
 @Data
+@Builder
 public class CreateRoleDto {
   @NotBlank
   String name;

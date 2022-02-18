@@ -1,10 +1,14 @@
 package com.kitm.library.backend.domain.role;
 
+import com.kitm.library.api.role.IRoleService;
+import com.kitm.library.api.role.dto.CreateRoleDto;
+import com.kitm.library.api.role.dto.RoleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author votuscode (https://github.com/votuscode)
@@ -13,7 +17,7 @@ import java.util.Collection;
  */
 @Service
 @Transactional
-public class RoleService {
+public class RoleService implements IRoleService {
   private final RoleRepository roleRepository;
 
   @Autowired
@@ -21,15 +25,29 @@ public class RoleService {
     this.roleRepository = roleRepository;
   }
 
-  public Collection<RoleEntity> findAll() {
-    return roleRepository.findAll();
+  @Override
+  public List<RoleDto> findAll() {
+    return roleRepository.findAll().stream()
+        .map(this::convert)
+        .toList();
   }
 
-  public RoleEntity createOne(String name) {
+  @Transactional
+  @Override
+  public RoleDto createOne(CreateRoleDto createRoleDto) {
     final RoleEntity roleEntity = RoleEntity.builder()
-        .name(name)
+        .name(createRoleDto.getName())
         .build();
 
-    return roleRepository.save(roleEntity);
+    return convert(
+        roleRepository.save(roleEntity)
+    );
+  }
+
+  private RoleDto convert(RoleEntity roleEntity) {
+    return RoleDto.builder()
+        .id(roleEntity.getId())
+        .name(roleEntity.getName())
+        .build();
   }
 }

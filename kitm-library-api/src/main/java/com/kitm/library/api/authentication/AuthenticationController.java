@@ -1,9 +1,9 @@
-package com.kitm.library.backend.authentication;
+package com.kitm.library.api.authentication;
 
-import com.kitm.library.backend.authentication.dto.AuthenticatedDto;
-import com.kitm.library.backend.authentication.dto.LoginDto;
-import com.kitm.library.backend.domain.user.UserEntity;
-import com.kitm.library.backend.spring.web.config.security.JwtTokenUtil;
+import com.kitm.library.api.authentication.dto.AuthenticatedDto;
+import com.kitm.library.api.authentication.dto.LoginDto;
+import com.kitm.library.api.user.IUserEntity;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Date;
 
 /**
@@ -24,6 +25,7 @@ import java.util.Date;
  * @version 1.0
  * @since 12.02.22
  */
+@Api(value = "Authentication")
 @RestController
 @RequestMapping(path = "api/public")
 @AllArgsConstructor
@@ -31,15 +33,15 @@ public class AuthenticationController {
 
   private final AuthenticationManager authenticationManager;
 
-  private final JwtTokenUtil jwtTokenUtil;
+  private final IJwtTokenUtil jwtTokenUtil;
 
   @PostMapping("login")
-  public ResponseEntity<AuthenticatedDto> login(@RequestBody LoginDto request) {
+  public ResponseEntity<AuthenticatedDto> login(@RequestBody @Valid LoginDto request) {
     try {
       Authentication authenticate = authenticationManager
           .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
-      UserEntity userEntity = (UserEntity) authenticate.getPrincipal();
+      IUserEntity userEntity = (IUserEntity) authenticate.getPrincipal();
 
       String token = jwtTokenUtil.generateAccessToken(userEntity);
       Date expires = jwtTokenUtil.getExpirationDate(token);
@@ -49,7 +51,7 @@ public class AuthenticationController {
           .body(AuthenticatedDto.builder()
               .expires(expires)
               .build());
-    } catch (BadCredentialsException ex) {
+    } catch (BadCredentialsException exception) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
   }

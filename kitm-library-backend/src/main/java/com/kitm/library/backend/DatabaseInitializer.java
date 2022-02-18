@@ -1,16 +1,14 @@
 package com.kitm.library.backend;
 
 import com.google.common.collect.ImmutableSet;
-import com.kitm.library.backend.domain.role.RoleService;
+import com.kitm.library.api.role.IRoleService;
+import com.kitm.library.api.role.dto.CreateRoleDto;
+import com.kitm.library.api.user.dto.CreateUserDto;
 import com.kitm.library.backend.domain.user.UserService;
-import com.kitm.library.backend.domain.user.dto.CreateUserDto;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author votuscode (https://github.com/votuscode)
@@ -21,13 +19,15 @@ import java.util.Set;
 @AllArgsConstructor
 public class DatabaseInitializer implements ApplicationListener<ApplicationReadyEvent> {
 
-  private final RoleService roleService;
+  private final IRoleService roleService;
 
   private final UserService userService;
 
   @Override
   public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-    roleService.createOne("ADMIN");
+    roleService.createOne(CreateRoleDto.builder()
+        .name("ADMIN")
+        .build());
 
     userService.createOne(CreateUserDto.builder()
         .username("admin")

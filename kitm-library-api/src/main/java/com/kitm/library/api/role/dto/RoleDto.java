@@ -1,6 +1,5 @@
-package com.kitm.library.backend.domain.role.dto;
+package com.kitm.library.api.role.dto;
 
-import com.kitm.library.backend.domain.role.RoleEntity;
 import lombok.Builder;
 import lombok.Data;
 
@@ -20,11 +19,4 @@ public class RoleDto {
 
   @NotBlank
   private String name;
-
-  public static RoleDto from(RoleEntity roleEntity) {
-    return RoleDto.builder()
-        .id(roleEntity.getId())
-        .name(roleEntity.getName())
-        .build();
-  }
 }

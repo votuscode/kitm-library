@@ -2,66 +2,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>kitm-library-admin</artifactId>
+
   <parent>
     <artifactId>kitm-library</artifactId>
     <groupId>com.kitm</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath/> <!-- lookup parent from repository -->
   </parent>
-  <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>kitm-library-admin</artifactId>
-
-  <properties>
-    <maven.compiler.source>16</maven.compiler.source>
-    <maven.compiler.target>16</maven.compiler.target>
-  </properties>
 
   <dependencies>
-<!--    <dependency>-->
-<!--      <groupId>com.kitm</groupId>-->
-<!--      <artifactId>kitm-library-backend</artifactId>-->
-<!--      <version>${kitm.library.version}</version>-->
-<!--      <classifier>swagger-meta</classifier>-->
-<!--      <type>zip</type>-->
-<!--      <exclusions>-->
-<!--        <exclusion>-->
-<!--          <groupId>*</groupId>-->
-<!--          <artifactId>*</artifactId>-->
-<!--        </exclusion>-->
-<!--      </exclusions>-->
-<!--      <optional>true</optional>-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>com.kitm</groupId>
+      <artifactId>kitm-library-api</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.1.1</version>
-        <executions>
-          <execution>
-            <id>unpack-swagger-kitm-library-backend</id>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-            <phase>generate-sources</phase>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>com.kitm.library</groupId>
-                  <artifactId>kitm-library-backend</artifactId>
-                  <classifier>swagger-meta</classifier>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/swagger/kitm-library/backend</outputDirectory>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-
     <outputDirectory>target/dist/</outputDirectory>
 
     <resources>

@@ -1,4 +1,4 @@
-package com.kitm.library.backend.authentication.dto;
+package com.kitm.library.api.authentication.dto;
 
 import lombok.Builder;
 import lombok.Data;

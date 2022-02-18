@@ -1,4 +1,4 @@
-package com.kitm.library.backend.domain.user.dto;
+package com.kitm.library.api.user.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.Collection;
 /**
  * @author votuscode (https://github.com/votuscode)
  * @version 1.0
- * @since 12.02.22
+ * @since 18.02.22
  */
 @Data
 @Builder
