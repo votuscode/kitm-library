@@ -2,29 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>kitm-library-admin</artifactId>
+
   <parent>
     <artifactId>kitm-library</artifactId>
     <groupId>com.kitm</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath/> <!-- lookup parent from repository -->
   </parent>
-  <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>kitm-library-admin</artifactId>
-
-  <properties>
-    <maven.compiler.source>16</maven.compiler.source>
-    <maven.compiler.target>16</maven.compiler.target>
-  </properties>
 
   <dependencies>
     <dependency>
-      <groupId>org.codehaus.mojo</groupId>
-      <artifactId>exec-maven-plugin</artifactId>
+      <groupId>com.kitm</groupId>
+      <artifactId>kitm-library-api</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 
   <build>
     <outputDirectory>target/dist/</outputDirectory>
+
     <resources>
       <resource>
         <directory>var/resources</directory>
@@ -48,6 +47,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
+            <version>3.0.0</version>
             <executions>
               <execution>
                 <id>npm install</id>

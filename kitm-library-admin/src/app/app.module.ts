@@ -1,8 +1,10 @@
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RoleService } from 'src/app/api/role.service';
-import { UserService } from 'src/app/api/user.service';
+import { ApiModule } from '@api/api.module';
+import { Configuration } from '@api/configuration';
+import { provideAuthenticationInterceptor } from '~/app/authentication.interceptor';
+import { provideHttpErrorInterceptor } from '~/app/http-error.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,8 +17,16 @@ import { AppComponent } from './app.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    ApiModule.forRoot(() => {
+      return new Configuration({
+        basePath: '',
+      });
+    }),
   ],
-  providers: [RoleService, UserService],
+  providers: [
+    provideHttpErrorInterceptor(),
+    provideAuthenticationInterceptor(),
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

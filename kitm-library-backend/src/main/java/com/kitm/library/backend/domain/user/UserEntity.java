@@ -1,12 +1,11 @@
 package com.kitm.library.backend.domain.user;
 
 import com.kitm.library.backend.domain.role.RoleEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,22 +23,22 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Builder
-public class UserEntity implements Serializable {
+public class UserEntity implements Serializable, UserDetails {
   @Id
   @GeneratedValue()
   @Column(updatable = false, nullable = false, length = 16)
   private UUID id;
 
-  @Column
+  @Column(nullable = false)
   private String name;
 
-  @Column
+  @Column(nullable = false)
   private String email;
 
   @Column(nullable = false, unique = true, length = 32)
   private String username;
 
-  @Column
+  @Column(nullable = false)
   private String password;
 
   @ManyToMany(fetch = FetchType.EAGER)
@@ -52,4 +51,29 @@ public class UserEntity implements Serializable {
   @UpdateTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return roles;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 }

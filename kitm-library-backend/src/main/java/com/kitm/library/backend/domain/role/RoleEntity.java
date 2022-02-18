@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Builder
-public class RoleEntity {
+public class RoleEntity implements GrantedAuthority {
   @Id
   @GeneratedValue()
   @Column(updatable = false, nullable = false, length = 16)
@@ -29,4 +30,9 @@ public class RoleEntity {
 
   @Column(nullable = false, unique = true, length = 8)
   private String name;
+
+  @Override
+  public String getAuthority() {
+    return name;
+  }
 }

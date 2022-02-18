@@ -1,2 +1,12 @@
+### JetBrains template
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
+*.iml
+
+## Directory-based project format:
+.idea/
+.mvn/
+
+# "temporary" build files
 /**/target
-/.idea/
+
+/application.properties
