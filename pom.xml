@@ -10,7 +10,7 @@
 
   <modules>
     <module>kitm-library-api</module>
-    <module>kitm-library-admin</module>
+    <module>kitm-library-ui</module>
     <module>kitm-library-backend</module>
   </modules>
 

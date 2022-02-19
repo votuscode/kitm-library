@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>kitm-library-admin</artifactId>
+  <artifactId>kitm-library-ui</artifactId>
 
   <parent>
     <artifactId>kitm-library</artifactId>
@@ -35,13 +35,7 @@
 
   <profiles>
     <profile>
-      <id>run-nodejs-tasks</id>
-      <activation>
-        <property>
-          <name>skip.ui.webpack.bundle</name>
-          <value>!true</value>
-        </property>
-      </activation>
+      <id>ui</id>
       <build>
         <plugins>
           <plugin>
@@ -62,6 +56,7 @@
                   </arguments>
                 </configuration>
               </execution>
+
               <execution>
                 <id>build ui</id>
                 <phase>compile</phase>

@@ -17,7 +17,7 @@ import { ToastService } from '~/app/toast.service';
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class AppComponent implements OnInit {
-  title = 'kitm-library-admin';
+  title = 'kitm-library-ui';
 
   readonly roles$ = new BehaviorSubject<RoleDto[]>([]);
   readonly users$ = new BehaviorSubject<UserDto[]>([]);
