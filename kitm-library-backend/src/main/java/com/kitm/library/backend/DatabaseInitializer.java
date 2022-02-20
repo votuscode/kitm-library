@@ -5,7 +5,7 @@ import com.kitm.library.api.role.IRoleService;
 import com.kitm.library.api.role.dto.CreateRoleDto;
 import com.kitm.library.api.user.dto.CreateUserDto;
 import com.kitm.library.backend.domain.user.UserService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @since 12.02.22
  */
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DatabaseInitializer implements ApplicationListener<ApplicationReadyEvent> {
 
   private final IRoleService roleService;

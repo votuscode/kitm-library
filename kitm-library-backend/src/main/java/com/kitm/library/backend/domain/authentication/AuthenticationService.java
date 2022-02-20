@@ -4,7 +4,8 @@ import com.kitm.library.api.authentication.IAuthenticationService;
 import com.kitm.library.api.authentication.dto.AuthenticatedDto;
 import com.kitm.library.api.authentication.dto.LoginDto;
 import com.kitm.library.backend.domain.user.UserEntity;
-import lombok.AllArgsConstructor;
+import com.kitm.library.backend.spring.web.config.jwt.JwtTokenUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,7 +19,7 @@ import java.util.Date;
  * @since 18.02.22
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AuthenticationService implements IAuthenticationService {
 
   private final AuthenticationManager authenticationManager;

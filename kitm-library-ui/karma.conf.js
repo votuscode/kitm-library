@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/kitm-library-admin'),
+      dir: require('path').join(__dirname, './coverage/kitm-library-ui'),
       subdir: '.',
       reporters: [
         { type: 'html' },

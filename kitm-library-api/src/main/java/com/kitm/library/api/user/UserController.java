@@ -3,7 +3,7 @@ package com.kitm.library.api.user;
 import com.kitm.library.api.user.dto.CreateUserDto;
 import com.kitm.library.api.user.dto.UserDto;
 import io.swagger.annotations.Api;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +18,9 @@ import java.util.Collection;
 @Api(value = "User")
 @RestController()
 @RequestMapping(path = "/api/user")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserController {
+  
   private final IUserService userService;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

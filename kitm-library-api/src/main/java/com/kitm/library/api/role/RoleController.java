@@ -3,7 +3,7 @@ package com.kitm.library.api.role;
 import com.kitm.library.api.role.dto.CreateRoleDto;
 import com.kitm.library.api.role.dto.RoleDto;
 import io.swagger.annotations.Api;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +18,9 @@ import java.util.Collection;
 @Api(value = "Role")
 @RestController
 @RequestMapping(path = "/api/role")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RoleController {
+
   private final IRoleService roleService;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
