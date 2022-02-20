@@ -3,7 +3,7 @@ package com.kitm.library.api.authentication;
 import com.kitm.library.api.authentication.dto.AuthenticatedDto;
 import com.kitm.library.api.authentication.dto.LoginDto;
 import io.swagger.annotations.Api;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +22,9 @@ import javax.validation.Valid;
 @Api(value = "Authentication")
 @RestController
 @RequestMapping(path = "/api/public")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AuthenticationController {
+
   private final IAuthenticationService authenticationService;
 
   @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -5,7 +5,7 @@ import com.kitm.library.api.user.dto.CreateUserDto;
 import com.kitm.library.api.user.dto.UserDto;
 import com.kitm.library.backend.domain.role.RoleEntity;
 import com.kitm.library.backend.domain.role.RoleRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserService implements IUserService {
 
   private final RoleRepository roleRepository;

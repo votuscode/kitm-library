@@ -21,7 +21,7 @@ export class ToastService {
     });
 
     document.body.append(alert);
-    return alert.toast();
+    return typeof alert.toast === 'function' && alert.toast();
   };
 
   success = (message: string, header = 'Success') => this.notify(message, header, 'success', 'check2-circle');

@@ -1,6 +1,5 @@
-package com.kitm.library.backend.domain.authentication;
+package com.kitm.library.backend.spring.web.config.jwt;
 
-import com.kitm.library.api.user.IUserEntity;
 import com.kitm.library.backend.domain.user.UserEntity;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;

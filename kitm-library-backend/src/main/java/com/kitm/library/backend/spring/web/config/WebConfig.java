@@ -23,6 +23,9 @@ public class WebConfig implements WebMvcConfigurer {
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry
+        .addResourceHandler("/resources/static/**")
+        .addResourceLocations("/");
 //    registry.addResourceHandler("", "/", UI_CONTEXT_PATH, UI_CONTEXT_PATH + "/", UI_CONTEXT_PATH + "/**")
 //        .addResourceLocations("classpath:/com/kitm/library/admin/")
 //        .resourceChain(false)

@@ -1,6 +1,5 @@
-package com.kitm.library.backend.spring.web.config.security;
+package com.kitm.library.backend.spring.web.config.jwt;
 
-import com.kitm.library.backend.domain.authentication.JwtTokenUtil;
 import com.kitm.library.backend.domain.user.UserEntity;
 import com.kitm.library.backend.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,25 +30,26 @@ import static java.util.Optional.ofNullable;
 public class JwtTokenFilter extends OncePerRequestFilter {
 
   private final JwtTokenUtil jwtTokenUtil;
+
   private final UserRepository userRepository;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-    // Get authorization header and validate
+    // get authorization header and validate
     final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
     if (!StringUtils.hasText(header) || !header.startsWith("Bearer ")) {
       chain.doFilter(request, response);
       return;
     }
 
-    // Get jwt token and validate
+    // get jwt token and validate
     final String token = header.split(" ")[1].trim();
     if (!jwtTokenUtil.validate(token)) {
       chain.doFilter(request, response);
       return;
     }
 
-    // Get user identity and set it on the spring security context
+    // get user identity and set it on the spring security context
     UserEntity userDetails = userRepository
         .findUserEntityByUsername(jwtTokenUtil.getUsername(token))
         .orElse(null);

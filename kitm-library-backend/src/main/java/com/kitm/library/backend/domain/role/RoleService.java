@@ -3,7 +3,7 @@ package com.kitm.library.backend.domain.role;
 import com.kitm.library.api.role.IRoleService;
 import com.kitm.library.api.role.dto.CreateRoleDto;
 import com.kitm.library.api.role.dto.RoleDto;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,8 +16,9 @@ import java.util.List;
  */
 @Service
 @Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RoleService implements IRoleService {
+
   private final RoleRepository roleRepository;
 
   @Override
