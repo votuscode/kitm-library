@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath" : "target/dist/com/kitm/library/admin",
+            "outputPath" : "target/dist/com/kitm/library/ui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -37,7 +37,7 @@
           },
           "configurations": {
             "production": {
-              "baseHref" : "/admin/",
+              "baseHref" : "/ui/",
               "budgets": [
                 {
                   "type": "initial",

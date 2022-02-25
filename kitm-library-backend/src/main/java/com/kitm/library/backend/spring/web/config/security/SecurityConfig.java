@@ -68,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   public void configure(WebSecurity web) {
     web
         .ignoring()
+        .antMatchers("/ui/**")
         .antMatchers(
             HttpMethod.GET,
             "/**/*.png",

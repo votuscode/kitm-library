@@ -19,24 +19,25 @@ import java.io.IOException;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
   private static final String API_CONTEXT_PATH = "/api";
-  private static final String UI_CONTEXT_PATH = "/admin";
+  private static final String UI_CONTEXT_PATH = "/ui";
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     registry
         .addResourceHandler("/resources/static/**")
         .addResourceLocations("/");
-//    registry.addResourceHandler("", "/", UI_CONTEXT_PATH, UI_CONTEXT_PATH + "/", UI_CONTEXT_PATH + "/**")
-//        .addResourceLocations("classpath:/com/kitm/library/admin/")
-//        .resourceChain(false)
-//        .addResolver(new PathResourceResolver() {
-//          @Override
-//          protected Resource getResource(String resourcePath, Resource location) throws IOException {
-//            System.out.println(resourcePath);
-//            Resource requestedResource = location.createRelative(resourcePath);
-//            boolean resourceFound = requestedResource.exists() && requestedResource.isReadable();
-//            return resourceFound ? requestedResource : new ClassPathResource("/com/kitm/library/admin/index.html");
-//          }
-//        });
+
+    registry.addResourceHandler("", "/", UI_CONTEXT_PATH, UI_CONTEXT_PATH + "/", UI_CONTEXT_PATH + "/**")
+        .addResourceLocations("classpath:/com/kitm/library/ui/")
+        .resourceChain(false)
+        .addResolver(new PathResourceResolver() {
+          @Override
+          protected Resource getResource(String resourcePath, Resource location) throws IOException {
+            System.out.println(resourcePath);
+            Resource requestedResource = location.createRelative(resourcePath);
+            boolean resourceFound = requestedResource.exists() && requestedResource.isReadable();
+            return resourceFound ? requestedResource : new ClassPathResource("/com/kitm/library/ui/index.html");
+          }
+        });
   }
 }

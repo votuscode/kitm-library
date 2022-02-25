@@ -19,7 +19,7 @@
     <maven.compiler.target>16</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-<!--    <start.class>com.kitm.library.backend.LibraryBackend</start.class>-->
+    <start.class>com.kitm.library.backend.LibraryBackend</start.class>
     <spring.boot.version>2.5.4</spring.boot.version>
     <swagger-maven-plugin-version>3.1.8</swagger-maven-plugin-version>
     <jackson.version>2.12.4</jackson.version>
