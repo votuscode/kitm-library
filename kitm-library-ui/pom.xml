@@ -22,59 +22,45 @@
   </dependencies>
 
   <build>
-    <outputDirectory>target/dist/</outputDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <!-- npm install -->
+          <execution>
+            <id>install</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>npm</executable>
+              <arguments>
+                <argument>install</argument>
+              </arguments>
+            </configuration>
+          </execution>
 
-    <resources>
-      <resource>
-        <directory>var/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
-
+          <!-- npm run build -->
+          <execution>
+            <id>build</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>npm</executable>
+              <arguments>
+                <argument>run</argument>
+                <argument>build</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
 
-  <profiles>
-    <profile>
-      <id>ui</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>3.0.0</version>
-            <executions>
-              <execution>
-                <id>npm install</id>
-                <phase>initialize</phase>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <configuration>
-                  <executable>npm</executable>
-                  <arguments>
-                    <argument>install</argument>
-                  </arguments>
-                </configuration>
-              </execution>
-
-              <execution>
-                <id>build ui</id>
-                <phase>compile</phase>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <configuration>
-                  <executable>npm</executable>
-                  <arguments>
-                    <argument>run</argument>
-                    <argument>build</argument>
-                  </arguments>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>
