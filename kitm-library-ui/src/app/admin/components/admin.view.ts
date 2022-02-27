@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { changeDetection } from '~/change-detection.strategy';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  template: `
+    <app-layout>
+      <router-outlet></router-outlet>
+    </app-layout>
+  `,
   changeDetection,
 })
-export class AppComponent {
-
+export class AdminView {
 }
