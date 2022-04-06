@@ -6,6 +6,9 @@ import * as fromComponents from './components';
 const routes: Routes = [
   {
     path: '', component: fromComponents.AdminView, children: [
+      { path: 'authors', component: fromComponents.AuthorListComponent },
+      { path: 'authors/add', component: fromComponents.AddAuthorComponent },
+      { path: 'authors/:id', component: fromComponents.UpdateAuthorComponent },
       { path: 'categories', component: fromComponents.CategoryListComponent },
       { path: 'categories/add', component: fromComponents.AddCategoryComponent },
       { path: 'categories/:id', component: fromComponents.UpdateCategoryComponent },

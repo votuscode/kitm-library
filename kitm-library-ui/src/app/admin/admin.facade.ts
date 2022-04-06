@@ -1,13 +1,22 @@
 import { Injectable } from '@angular/core';
 
-interface Category {
+export interface Author {
   id: string;
   name: string;
   description: string;
   books: number;
+  categories: number;
 }
 
-interface Book {
+export interface Category {
+  id: string;
+  name: string;
+  description: string;
+  authors: number;
+  books: number;
+}
+
+export interface Book {
   id: string;
   name: string;
   description: string;
@@ -19,23 +28,43 @@ interface Book {
 
 @Injectable()
 export class AdminFacade {
+  authors: Author[] = [
+    {
+      id: 'author-1',
+      name: 'Author #1',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, velit?',
+      books: 123,
+      categories: 123,
+    },
+    {
+      id: 'author-2',
+      name: 'Author #2',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, velit?',
+      books: 123,
+      categories: 123,
+    },
+  ];
+
   categories: Category[] = [
     {
       id: 'category-1',
       name: 'Category #1',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, velit?',
+      authors: 123,
       books: 123,
     },
     {
       id: 'category-2',
       name: 'Category #2',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, velit?',
+      authors: 123,
       books: 123,
     },
     {
       id: 'category-3',
       name: 'Category #3',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, velit?',
+      authors: 123,
       books: 123,
     },
   ];
