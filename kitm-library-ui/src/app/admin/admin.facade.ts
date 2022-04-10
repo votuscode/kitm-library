@@ -1,4 +1,12 @@
 import { Injectable } from '@angular/core';
+import { AuthenticationService } from '@api/api/authentication.service';
+import { RoleService } from '@api/api/role.service';
+import { UserService } from '@api/api/user.service';
+import { RoleDto } from '@api/model/roleDto';
+import { UserDto } from '@api/model/userDto';
+import { BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { ToastService } from '~/app/toast.service';
 
 export interface Author {
   id: string;
@@ -28,6 +36,34 @@ export interface Book {
 
 @Injectable()
 export class AdminFacade {
+  readonly roles$ = new BehaviorSubject<RoleDto[]>([]);
+  readonly users$ = new BehaviorSubject<UserDto[]>([]);
+
+  constructor(
+    readonly roleService: RoleService,
+    readonly userService: UserService,
+    readonly authenticationService: AuthenticationService,
+    readonly toastService: ToastService,
+  ) {
+  }
+
+  getRoles = () => {
+    this.roleService.getRoles().pipe(
+      tap(roles => {
+        console.log({ roles });
+        this.roles$.next(roles);
+      }),
+    ).subscribe();
+  };
+
+  getUsers = () => {
+    this.userService.getUsers().pipe(
+      tap(users => {
+        this.users$.next(users);
+      }),
+    ).subscribe();
+  };
+
   authors: Author[] = [
     {
       id: 'author-1',

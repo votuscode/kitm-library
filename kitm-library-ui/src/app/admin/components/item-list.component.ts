@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { changeDetection } from '~/change-detection.strategy';
 
+export type AsyncData<T> = T | null | undefined;
+
 export interface ItemListOptions<T> {
   mapper: (data: T) => ListItem;
 }
@@ -17,7 +19,10 @@ export interface ListItem {
 @Component({
   selector: 'app-item-list',
   template: `
-    <ul class="list-group" *ngIf="options">
+    <ng-template #loading>
+      <p>Loading...</p>
+    </ng-template>
+    <ul class="list-group" *ngIf="options && items; else loading">
       <a [routerLink]="item.link"
          class="list-group-item list-group-item-action flex-column align-items-start"
          *ngFor="let item of items.map(options.mapper)">
@@ -30,8 +35,8 @@ export interface ListItem {
       </a>
     </ul>
 
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
+    <nav aria-label="Page navigation">
+      <ul class="pagination mt-3">
         <li class="page-item">
           <a class="page-link" href="#" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
@@ -52,6 +57,6 @@ export interface ListItem {
 })
 export class ItemListComponent<T> {
 
-  @Input() items!: T[];
+  @Input() items: AsyncData<T[]>;
   @Input() options!: ItemListOptions<T>;
 }

@@ -16,11 +16,19 @@ import { CategoryListComponent } from '~/app/admin/components/category/category-
 import { CategoryFormComponent } from '~/app/admin/components/category/category-form.component';
 import { AddCategoryComponent } from '~/app/admin/components/category/add-category.component';
 import { UpdateCategoryComponent } from '~/app/admin/components/category/update-category.component';
+// role
+import { RoleListComponent } from '~/app/admin/components/role/role-list.component';
+// user
+import { UserListComponent } from '~/app/admin/components/user/user-list.component';
 
 export const components = [
   AdminView,
   LayoutComponent,
   ItemListComponent,
+  // role
+  RoleListComponent,
+  // user
+  UserListComponent,
   // author
   AuthorListComponent,
   AuthorFormComponent,
@@ -40,6 +48,10 @@ export const components = [
 
 export {
   AdminView,
+  // role
+  RoleListComponent,
+  // user
+  UserListComponent,
   // author
   AuthorListComponent,
   AddAuthorComponent,

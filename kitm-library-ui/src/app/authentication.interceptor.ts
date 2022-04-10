@@ -8,7 +8,7 @@ import {
 import { Injectable, Provider } from '@angular/core';
 import { Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
-import { AuthenticationFacade } from '~/app/authentication.facade';
+import { AuthenticationFacade } from '~/app/core/security/authentication.facade';
 
 @Injectable()
 class AuthenticationInterceptor implements HttpInterceptor {

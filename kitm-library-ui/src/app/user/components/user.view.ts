@@ -6,7 +6,7 @@ import { RoleDto } from '@api/model/roleDto';
 import { UserDto } from '@api/model/userDto';
 import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AuthenticationFacade } from '~/app/authentication.facade';
+import { AuthenticationFacade } from '~/app/core/security/authentication.facade';
 import { ToastService } from '~/app/toast.service';
 
 @Component({
