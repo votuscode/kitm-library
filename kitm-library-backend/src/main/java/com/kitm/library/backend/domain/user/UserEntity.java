@@ -19,6 +19,7 @@ import java.util.UUID;
  * @since 20.09.21
  */
 @Entity
+@Table(name = "user")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

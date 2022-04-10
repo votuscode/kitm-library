@@ -11,6 +11,7 @@ import java.util.Collection;
  * @since 14.02.22
  */
 public interface IRoleService {
+
   Collection<RoleDto> findAll();
 
   RoleDto createOne(CreateRoleDto createRoleDto);

@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
 /**
@@ -18,6 +15,7 @@ import java.util.UUID;
  * @since 23.09.21
  */
 @Entity
+@Table(name = "role")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { changeDetection } from '~/change-detection.strategy';
 import { AdminFacade } from '~/app/admin/admin.facade';
 
@@ -17,7 +18,9 @@ import { AdminFacade } from '~/app/admin/admin.facade';
           <label class="col-lg-3 control-label">Category</label>
           <div class="col-lg-9">
             <select class="form-control">
-              <option *ngFor="let category of adminFacade.categories" [innerText]="category.name">Category</option>
+              <option *ngFor="let category of adminFacade.categories$ | async" [innerText]="category.name">
+                Category
+              </option>
             </select>
           </div>
         </div>
@@ -55,7 +58,15 @@ import { AdminFacade } from '~/app/admin/admin.facade';
   `,
   changeDetection,
 })
-export class BookFormComponent {
-  constructor(readonly adminFacade: AdminFacade) {
+export class BookFormComponent implements OnInit {
+  constructor(readonly adminFacade: AdminFacade, readonly route: ActivatedRoute) {
+  }
+
+  ngOnInit() {
+    this.adminFacade.getCategories();
+
+    console.log(this.route.snapshot.params)
+
+    // this.adminFacade.getBook()
   }
 }
