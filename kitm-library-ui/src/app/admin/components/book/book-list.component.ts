@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminFacade, BookVm } from '~/app/admin/admin.facade';
-import { ItemListOptions } from '~/app/admin/components/item-list.component';
+import { ItemListOptions } from '~/app/admin/components/item-list/item-list.component';
 import { changeDetection } from '~/change-detection.strategy';
 
 @Component({

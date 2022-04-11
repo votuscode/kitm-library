@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { changeDetection } from '~/change-detection.strategy';
 import { RoleDto } from '@api/model/roleDto';
 import { AdminFacade } from '~/app/admin/admin.facade';
-import { ItemListOptions } from '~/app/admin/components/item-list.component';
+import { ItemListOptions } from '~/app/admin/components/item-list/item-list.component';
 
 @Component({
   template: `

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryDto } from '@api/model/categoryDto';
 import { AdminFacade } from '~/app/admin/admin.facade';
-import { ItemListOptions } from '~/app/admin/components/item-list.component';
+import { ItemListOptions } from '~/app/admin/components/item-list/item-list.component';
 import { changeDetection } from '~/change-detection.strategy';
 
 @Component({
