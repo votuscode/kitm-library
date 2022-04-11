@@ -6,21 +6,11 @@ import { ItemListOptions } from '~/app/admin/components/item-list.component';
 
 @Component({
   template: `
-    <div class="row mb-3">
-      <div class="col-lg-8 col-md-7 col-sm-6">
-        <h2>Roles</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, obcaecati?</p>
-        <app-item-list [items]="adminFacade.roles$ | async" [options]="options"></app-item-list>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-12 col-lg-offset-3">
-        <button type="button" class="btn btn-primary" name="button" routerLink="/admin/roles/add">
-          Add role
-        </button>
-      </div>
-    </div>
+    <app-item-list header="Roles" description="Roles page" [items]="adminFacade.roles$ | async" [options]="options">
+      <button type="button" class="btn btn-primary" name="button" routerLink="/admin/roles/add">
+        Add role
+      </button>
+    </app-item-list>
   `,
   changeDetection,
 })

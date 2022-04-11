@@ -7,21 +7,11 @@ import { changeDetection } from '~/change-detection.strategy';
 @Component({
   selector: 'app-category-list',
   template: `
-    <div class="row mb-3">
-      <div class="col-lg-8 col-md-7 col-sm-6">
-        <h2>Categories</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, obcaecati?</p>
-        <app-item-list [items]="adminFacade.categories$ | async" [options]="options"></app-item-list>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-12 col-lg-offset-3">
-        <button type="button" class="btn btn-primary" name="button" routerLink="/admin/categories/add">
-          Add category
-        </button>
-      </div>
-    </div>
+    <app-item-list header="Categories" description="Categories page" [items]="adminFacade.categories$ | async" [options]="options">
+      <button type="button" class="btn btn-primary" name="button" routerLink="/admin/categories/add">
+        Add category
+      </button>
+    </app-item-list>
   `,
   changeDetection,
 })

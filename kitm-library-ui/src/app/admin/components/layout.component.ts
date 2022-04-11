@@ -52,20 +52,23 @@ import { changeDetection } from '~/change-detection.strategy';
       </div>
     </nav>
 
-    <div class="row">
-      <div class="col-3 d-none d-lg-block">
-        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-          <a *ngFor="let link of links" class="nav-link" data-toggle="pill" href="#v-pills-home" role="tab"
-             aria-controls="v-pills-home" aria-selected="true" [routerLink]="link.url"
-             routerLinkActive="active">{{ link.label }}</a>
+    <div class="container-fluid" style="height: calc(100vh - 5rem); overflow: auto">
+      <div class="row">
+        <div class="col-3 d-none d-lg-block">
+          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a *ngFor="let link of links" class="nav-link" data-toggle="pill" href="#v-pills-home" role="tab"
+               aria-controls="v-pills-home" aria-selected="true" [routerLink]="link.url"
+               routerLinkActive="active">{{ link.label }}
+            </a>
+          </div>
         </div>
-      </div>
-      <div class="col-9">
-        <div class="tab-content" id="v-pills-tabContent">
-          <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="v-pills-home-tab">
-            <main class="container">
-              <ng-content></ng-content>
-            </main>
+        <div class="col-9">
+          <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="v-pills-home-tab">
+              <main class="container">
+                <ng-content></ng-content>
+              </main>
+            </div>
           </div>
         </div>
       </div>
