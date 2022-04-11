@@ -17,7 +17,7 @@ import java.util.Collection;
  */
 @Api(value = "Role")
 @RestController
-@RequestMapping(path = "/api/role")
+@RequestMapping(path = "/api/roles")
 @RequiredArgsConstructor
 public class RoleController {
 

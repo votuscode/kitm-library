@@ -3,7 +3,7 @@ package com.kitm.library.api.role.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 /**
@@ -14,9 +14,10 @@ import java.util.UUID;
 @Data
 @Builder
 public class RoleDto {
-  @NotBlank
+
+  @NotNull
   private UUID id;
 
-  @NotBlank
+  @NotNull
   private String name;
 }

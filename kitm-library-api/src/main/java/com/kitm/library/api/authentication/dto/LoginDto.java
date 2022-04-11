@@ -2,7 +2,7 @@ package com.kitm.library.api.authentication.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author votuscode (https://github.com/votuscode)
@@ -11,9 +11,10 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 public class LoginDto {
-  @NotBlank
+
+  @NotNull
   private String username;
 
-  @NotBlank
+  @NotNull
   private String password;
 }

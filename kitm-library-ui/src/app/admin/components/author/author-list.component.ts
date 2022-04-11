@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthorDto } from '@api/model/authorDto';
+import { AdminFacade } from '~/app/admin/admin.facade';
 import { ItemListOptions } from '~/app/admin/components/item-list.component';
 import { changeDetection } from '~/change-detection.strategy';
-import { AdminFacade, Author } from '~/app/admin/admin.facade';
 
 @Component({
   selector: 'app-category-list',
@@ -10,7 +11,7 @@ import { AdminFacade, Author } from '~/app/admin/admin.facade';
       <div class="col-lg-8 col-md-7 col-sm-6">
         <h2>Authors</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, obcaecati?</p>
-        <app-item-list [items]="adminFacade.authors" [options]="options"></app-item-list>
+        <app-item-list [items]="adminFacade.authors$ | async" [options]="options"></app-item-list>
       </div>
     </div>
 
@@ -24,20 +25,24 @@ import { AdminFacade, Author } from '~/app/admin/admin.facade';
   `,
   changeDetection,
 })
-export class AuthorListComponent {
+export class AuthorListComponent implements OnInit {
 
-  options: ItemListOptions<Author> = {
-    mapper: ({ id, name, description, categories, books }) => {
+  options: ItemListOptions<AuthorDto> = {
+    mapper: ({ id, name, description, books }) => {
       return {
         id,
         name,
         description,
         link: `/admin/authors/${id}`,
-        info: `Categories: ${categories}, books: ${books}`,
+        info: `Books: ${books}`,
       };
     },
   };
 
   constructor(readonly adminFacade: AdminFacade) {
+  }
+
+  ngOnInit() {
+    this.adminFacade.getAuthors();
   }
 }

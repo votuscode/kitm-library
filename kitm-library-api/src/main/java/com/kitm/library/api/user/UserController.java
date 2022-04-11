@@ -17,10 +17,10 @@ import java.util.Collection;
  */
 @Api(value = "User")
 @RestController()
-@RequestMapping(path = "/api/user")
+@RequestMapping(path = "/api/users")
 @RequiredArgsConstructor
 public class UserController {
-  
+
   private final IUserService userService;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

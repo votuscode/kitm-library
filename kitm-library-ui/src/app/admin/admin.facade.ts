@@ -1,137 +1,90 @@
 import { Injectable } from '@angular/core';
 import { AuthenticationService } from '@api/api/authentication.service';
+import { AuthorService } from '@api/api/author.service';
+import { BookService } from '@api/api/book.service';
+import { CategoryService } from '@api/api/category.service';
 import { RoleService } from '@api/api/role.service';
 import { UserService } from '@api/api/user.service';
+import { AuthorDto } from '@api/model/authorDto';
+import { BookDto } from '@api/model/bookDto';
+import { CategoryDto } from '@api/model/categoryDto';
 import { RoleDto } from '@api/model/roleDto';
 import { UserDto } from '@api/model/userDto';
-import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin } from 'rxjs';
+import { take, tap } from 'rxjs/operators';
 import { ToastService } from '~/app/toast.service';
 
-export interface Author {
-  id: string;
-  name: string;
-  description: string;
-  books: number;
-  categories: number;
-}
+const next = <T>(subject: BehaviorSubject<T>) => tap((data: T) => subject.next(data));
 
-export interface Category {
-  id: string;
-  name: string;
-  description: string;
-  authors: number;
-  books: number;
-}
+const fromEntries = <T>(entries: Array<[string, T]>): Record<string, T> => {
+  return entries.reduce((acc, [key, value]) => {
+    acc[key] = value;
+    return acc;
+  }, {} as Record<string, T>);
+};
 
-export interface Book {
-  id: string;
-  name: string;
-  description: string;
-  pages: number;
-  isbn: string;
-  image: string;
-  categoryId: string;
+const asMap = <T extends { id: string }>(items: T[]): Record<string, T> => {
+  return fromEntries(items.map(item => [item.id, item]));
+};
+
+export interface BookVm extends BookDto {
+  relations: {
+    author: AuthorDto;
+    category: CategoryDto;
+  };
 }
 
 @Injectable()
 export class AdminFacade {
   readonly roles$ = new BehaviorSubject<RoleDto[]>([]);
   readonly users$ = new BehaviorSubject<UserDto[]>([]);
+  readonly authors$ = new BehaviorSubject<AuthorDto[]>([]);
+  readonly categories$ = new BehaviorSubject<CategoryDto[]>([]);
+  readonly books$ = new BehaviorSubject<BookVm[]>([]);
 
   constructor(
     readonly roleService: RoleService,
     readonly userService: UserService,
+    readonly authorService: AuthorService,
+    readonly categoryService: CategoryService,
+    readonly bookService: BookService,
     readonly authenticationService: AuthenticationService,
     readonly toastService: ToastService,
   ) {
   }
 
-  getRoles = () => {
-    this.roleService.getRoles().pipe(
-      tap(roles => {
-        console.log({ roles });
-        this.roles$.next(roles);
+  getRoles = () => this.roleService.getRoles().pipe(next(this.roles$)).subscribe();
+
+  getUsers = () => this.userService.getUsers().pipe(next(this.users$)).subscribe();
+
+  getAuthors = () => this.authorService.getAuthors().pipe(next(this.authors$)).subscribe();
+
+  getAuthor = (id: string) => this.authorService.getAuthor(id);
+
+  getCategories = () => this.categoryService.getCategories().pipe(next(this.categories$)).subscribe();
+
+  getCategory = (id: string) => this.categoryService.getCategory(id).pipe(take(1));
+
+  getBooks = () => {
+    forkJoin([
+      this.authorService.getAuthors(),
+      this.categoryService.getCategories(),
+      this.bookService.getBooks(),
+    ]).pipe(
+      tap(([authors, categories, books]) => {
+        const authorsMap = asMap(authors);
+        const categoriesMap = asMap(categories);
+
+        const vms = books.map((book): BookVm => {
+          const author = authorsMap[book.authorId];
+          const category = categoriesMap[book.categoryId];
+          return { ...book, relations: { author, category } };
+        });
+
+        this.books$.next(vms);
       }),
     ).subscribe();
   };
 
-  getUsers = () => {
-    this.userService.getUsers().pipe(
-      tap(users => {
-        this.users$.next(users);
-      }),
-    ).subscribe();
-  };
-
-  authors: Author[] = [
-    {
-      id: 'author-1',
-      name: 'Author #1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, velit?',
-      books: 123,
-      categories: 123,
-    },
-    {
-      id: 'author-2',
-      name: 'Author #2',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, velit?',
-      books: 123,
-      categories: 123,
-    },
-  ];
-
-  categories: Category[] = [
-    {
-      id: 'category-1',
-      name: 'Category #1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, velit?',
-      authors: 123,
-      books: 123,
-    },
-    {
-      id: 'category-2',
-      name: 'Category #2',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, velit?',
-      authors: 123,
-      books: 123,
-    },
-    {
-      id: 'category-3',
-      name: 'Category #3',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, velit?',
-      authors: 123,
-      books: 123,
-    },
-  ];
-
-  books: Book[] = [
-    {
-      id: 'book-1',
-      name: 'Book #1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, velit?',
-      pages: 123,
-      isbn: 'ISBN-123-123-123-123',
-      image: 'http://image.url',
-      categoryId: 'category-1',
-    },
-    {
-      id: 'book-2',
-      name: 'Book #2',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, velit?',
-      pages: 123,
-      isbn: 'ISBN-123-123-123-123',
-      image: 'http://image.url',
-      categoryId: 'category-2',
-    },
-    {
-      id: 'book-3',
-      name: 'Book #3',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, velit?',
-      pages: 123,
-      isbn: 'ISBN-123-123-123-123',
-      image: 'http://image.url',
-      categoryId: 'category-3',
-    },
-  ];
+  getBook = (id: string) => this.bookService.getBook(id);
 }

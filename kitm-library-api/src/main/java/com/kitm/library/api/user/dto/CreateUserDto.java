@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 /**
@@ -20,26 +20,29 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateUserDto {
-  @NotBlank
+
+  @NotNull
   @JsonProperty("name")
   String name;
 
-  @NotBlank @Email
+  @NotNull
+  @Email
   @JsonProperty("email")
   String email;
 
-  @NotBlank
+  @NotNull
   @JsonProperty("username")
   String username;
 
-  @NotBlank
+  @NotNull
   @JsonProperty("passwordOriginal")
   String passwordOriginal;
 
-  @NotBlank
+  @NotNull
   @JsonProperty("passwordConfirmation")
   String passwordConfirmation;
 
+  @NotNull
   @JsonProperty("roles")
   Collection<String> roles;
 }
