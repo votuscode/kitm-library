@@ -1,5 +1,5 @@
 import { AdminView } from '~/app/admin/components/admin.view';
-import { LayoutComponent } from '~/app/admin/components/layout.component';
+import { LayoutComponent } from '~/app/admin/components/layout/layout.component';
 import { ItemListComponent } from '~/app/admin/components/item-list/item-list.component';
 import { ItemListNavigationComponent } from '~/app/admin/components/item-list/item-list-navigation.component';
 // author

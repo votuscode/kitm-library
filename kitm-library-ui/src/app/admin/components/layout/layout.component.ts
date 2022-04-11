@@ -6,21 +6,19 @@ import { changeDetection } from '~/change-detection.strategy';
   template: `
     <nav th:fragment="layout-nav" class="navbar navbar-expand-lg navbar-light bg-light mb-3">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" [routerLink]="home">
           <img src="assets/library.svg" alt="Library" style="height: 1.5rem">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
+              <a class="nav-link active" aria-current="page" [routerLink]="home">Home</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -30,7 +28,7 @@ import { changeDetection } from '~/change-detection.strategy';
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li *ngFor="let link of links">
-                  <a class="dropdown-item" [href]="link.url">{{ link.label }}</a>
+                  <a class="dropdown-item" [routerLink]="link.url">{{ link.label }}</a>
                 </li>
                 <li>
                   <hr class="dropdown-divider">
@@ -56,9 +54,12 @@ import { changeDetection } from '~/change-detection.strategy';
       <div class="row">
         <div class="col-3 d-none d-lg-block">
           <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a *ngFor="let link of links" class="nav-link" data-toggle="pill" href="#v-pills-home" role="tab"
+            <a *ngFor="let link of links" class="nav-link" data-toggle="pill" href="#v-pills-home"
+               role="tab"
                aria-controls="v-pills-home" aria-selected="true" [routerLink]="link.url"
-               routerLinkActive="active">{{ link.label }}
+               routerLinkActive="active"
+            >
+              {{ link.label }}
             </a>
           </div>
         </div>
@@ -77,6 +78,8 @@ import { changeDetection } from '~/change-detection.strategy';
   changeDetection,
 })
 export class LayoutComponent {
+  readonly home = ["/admin"];
+
   readonly links = [
     { label: 'Edit roles', url: '/admin/roles' },
     { label: 'Edit users', url: '/admin/users' },
