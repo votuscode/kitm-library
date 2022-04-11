@@ -6,10 +6,12 @@ import com.kitm.library.api.author.dto.CreateAuthorDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author votuscode (https://github.com/votuscode)
@@ -29,6 +31,16 @@ public class AuthorService implements IAuthorService {
     return authorRepository.findAll().stream()
         .map(this::convert)
         .toList();
+  }
+
+  @Override
+  public AuthorDto getOne(UUID id) {
+
+    final AuthorEntity authorEntity = authorRepository
+        .findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Could not find author"));
+
+    return convert(authorEntity);
   }
 
   @Override

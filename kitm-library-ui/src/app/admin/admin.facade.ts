@@ -10,22 +10,11 @@ import { BookDto } from '@api/model/bookDto';
 import { CategoryDto } from '@api/model/categoryDto';
 import { RoleDto } from '@api/model/roleDto';
 import { UserDto } from '@api/model/userDto';
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin } from 'rxjs';
+import { take, tap } from 'rxjs/operators';
 import { ToastService } from '~/app/toast.service';
 
-interface FetchAllOptions<T> {
-  operation: Observable<T[]>;
-  subject: BehaviorSubject<T[]>;
-}
-
-const fetchAll = <T>({ operation, subject }: FetchAllOptions<T>) => {
-  operation.pipe(
-    tap(roles => {
-      subject.next(roles);
-    }),
-  ).subscribe();
-};
+const next = <T>(subject: BehaviorSubject<T>) => tap((data: T) => subject.next(data));
 
 const fromEntries = <T>(entries: Array<[string, T]>): Record<string, T> => {
   return entries.reduce((acc, [key, value]) => {
@@ -64,28 +53,24 @@ export class AdminFacade {
   ) {
   }
 
-  getRoles = () => fetchAll({
-    operation: this.roleService.getRoles(),
-    subject: this.roles$,
-  });
+  getRoles = () => this.roleService.getRoles().pipe(next(this.roles$)).subscribe();
 
-  getUsers = () => fetchAll({
-    operation: this.userService.getUsers(),
-    subject: this.users$,
-  });
+  getUsers = () => this.userService.getUsers().pipe(next(this.users$)).subscribe();
 
-  getAuthors = () => fetchAll({
-    operation: this.authorService.getAuthors(),
-    subject: this.authors$,
-  });
+  getAuthors = () => this.authorService.getAuthors().pipe(next(this.authors$)).subscribe();
 
-  getCategories = () => fetchAll({
-    operation: this.categoryService.getCategories(),
-    subject: this.categories$,
-  });
+  getAuthor = (id: string) => this.authorService.getAuthor(id);
+
+  getCategories = () => this.categoryService.getCategories().pipe(next(this.categories$)).subscribe();
+
+  getCategory = (id: string) => this.categoryService.getCategory(id).pipe(take(1));
 
   getBooks = () => {
-    forkJoin([this.authorService.getAuthors(), this.categoryService.getCategories(), this.bookService.getBooks()]).pipe(
+    forkJoin([
+      this.authorService.getAuthors(),
+      this.categoryService.getCategories(),
+      this.bookService.getBooks(),
+    ]).pipe(
       tap(([authors, categories, books]) => {
         const authorsMap = asMap(authors);
         const categoriesMap = asMap(categories);

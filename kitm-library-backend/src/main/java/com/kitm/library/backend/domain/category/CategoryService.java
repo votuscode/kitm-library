@@ -6,10 +6,12 @@ import com.kitm.library.api.category.dto.CreateCategoryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author votuscode (https://github.com/votuscode)
@@ -29,6 +31,16 @@ public class CategoryService implements ICategoryService {
     return categoryRepository.findAll().stream()
         .map(this::convert)
         .toList();
+  }
+
+  @Override
+  public CategoryDto getOne(UUID id) {
+
+    final CategoryEntity categoryEntity = categoryRepository
+        .findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Could not find category"));
+
+    return convert(categoryEntity);
   }
 
   @Override

@@ -60,7 +60,7 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
 
     final AuthorDto authorDto = authorService.createOne(CreateAuthorDto.builder()
         .name("Robert C. Martin")
-        .description("Robert C. Martin")
+        .description("Colloquially called Uncle Bob, is an American software engineer, instructor, and best-selling author. He is most recognized for developing many software design principles and for being a founder of the influential Agile Manifesto.")
         .build());
 
     bookService.createOne(CreateBookDto.builder()

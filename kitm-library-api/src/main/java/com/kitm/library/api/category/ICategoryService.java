@@ -4,6 +4,7 @@ import com.kitm.library.api.category.dto.CategoryDto;
 import com.kitm.library.api.category.dto.CreateCategoryDto;
 
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * @author votuscode (https://github.com/votuscode)
@@ -13,6 +14,8 @@ import java.util.Collection;
 public interface ICategoryService {
 
   Collection<CategoryDto> findAll();
+
+  CategoryDto getOne(UUID id);
 
   CategoryDto createOne(CreateCategoryDto createCategoryDto);
 }
