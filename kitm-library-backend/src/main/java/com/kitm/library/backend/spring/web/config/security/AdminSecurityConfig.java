@@ -35,7 +35,7 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
         .formLogin()
         .loginPage("/login")
         .failureUrl("/login?error")
-        .defaultSuccessUrl("/")
+        .defaultSuccessUrl("/admin")
         .and()
         .logout()
         .logoutSuccessUrl("/login?logout")

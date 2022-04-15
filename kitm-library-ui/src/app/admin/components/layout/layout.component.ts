@@ -4,6 +4,7 @@ import { changeDetection } from '~/change-detection.strategy';
 @Component({
   selector: 'app-layout',
   template: `
+    <!-- Header navigation -->
     <nav th:fragment="layout-nav" class="navbar navbar-expand-lg navbar-light bg-light mb-3">
       <div class="container-fluid">
         <a class="navbar-brand" [routerLink]="home">
@@ -34,6 +35,7 @@ import { changeDetection } from '~/change-detection.strategy';
                   <hr class="dropdown-divider">
                 </li>
                 <li>
+                  <!-- Logout button -->
                   <form method="post">
                     <input type="hidden"/>
                     <button type="submit" class="dropdown-item">Logout</button>
@@ -50,8 +52,10 @@ import { changeDetection } from '~/change-detection.strategy';
       </div>
     </nav>
 
+    <!-- Main container -->
     <div class="container-fluid" style="height: calc(100vh - 5rem); overflow: auto">
       <div class="row">
+        <!-- Left menu -->
         <div class="col-3 d-none d-lg-block">
           <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <a *ngFor="let link of links" class="nav-link" data-toggle="pill" href="#v-pills-home"
@@ -63,6 +67,7 @@ import { changeDetection } from '~/change-detection.strategy';
             </a>
           </div>
         </div>
+        <!-- Content -->
         <div class="col-9">
           <div class="tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="v-pills-home-tab">
