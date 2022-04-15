@@ -1,10 +1,7 @@
 package com.kitm.library.backend.domain.author;
 
 import com.kitm.library.backend.domain.book.BookEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.*;
@@ -19,6 +16,7 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 public class AuthorEntity {
 

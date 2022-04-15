@@ -44,12 +44,32 @@ public class AuthorService implements IAuthorService {
   }
 
   @Override
-  public AuthorDto createOne(CreateAuthorDto createAuthorDto) {
+  public AuthorDto createOne(CreateAuthorDto upsertAuthorDto) {
 
     final AuthorEntity authorEntity = AuthorEntity.builder()
-        .name(createAuthorDto.getName())
-        .description(createAuthorDto.getDescription())
+        .name(upsertAuthorDto.getName())
+        .description(upsertAuthorDto.getDescription())
         .build();
+
+    return convert(
+        authorRepository.save(authorEntity)
+    );
+  }
+
+  @Override
+  public void deleteOne(UUID id) {
+
+    authorRepository.deleteById(id);
+  }
+
+  @Override
+  public AuthorDto updateOne(UUID id, CreateAuthorDto upsertAuthorDto) {
+
+    final AuthorEntity authorEntity = authorRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Could not find author"));
+
+    authorEntity.setName(upsertAuthorDto.getName());
+    authorEntity.setDescription(upsertAuthorDto.getDescription());
 
     return convert(
         authorRepository.save(authorEntity)
