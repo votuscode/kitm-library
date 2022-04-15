@@ -19,7 +19,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateBookDto {
+public class UpsertBookDto {
 
   @NotNull
   @JsonProperty("name")

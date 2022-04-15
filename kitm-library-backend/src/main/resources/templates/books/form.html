@@ -1,0 +1,82 @@
+<!-- Book form -->
+<div th:fragment="form(form, dto, categories, authors)">
+  <!--/*@thymesVar id="form" type="com.kitm.library.backend.admin.common.models.Form"*/-->
+  <!--/*@thymesVar id="action" type="com.kitm.library.backend.admin.common.models.Form.Action"*/-->
+  <!--/*@thymesVar id="dto" type="com.kitm.library.backend.admin.book.dto.SubmitBookFormDto"*/-->
+  <!--/*@thymesVar id="categories" type="com.kitm.library.backend.admin.common.models.SelectOptions"*/-->
+  <!--/*@thymesVar id="authors" type="com.kitm.library.backend.admin.common.models.SelectOptions"*/-->
+  <!--/*@thymesVar id="option" type="com.kitm.library.backend.admin.common.models.SelectOptions.Option"*/-->
+  <form th:action="${form.url}" th:method="${form.method}" class="form-horizontal">
+    <fieldset>
+      <!-- Name -->
+      <div class="form-group mb-3">
+        <label class="col-lg-3 control-label">Name</label>
+        <div class="col-lg-9">
+          <input type="text" class="form-control" name="name" required th:value="${dto.name}"/>
+        </div>
+      </div>
+      <!-- Author -->
+      <div class="form-group mb-3">
+        <label class="col-lg-3 control-label">Author</label>
+        <div class="col-lg-9">
+          <select class="form-control" name="authorId">
+            <option th:each="option: ${authors.options}" th:value="${option.id}" th:text="${option.label}">
+              Label
+            </option>
+          </select>
+        </div>
+      </div>
+      <!-- Category -->
+      <div class="form-group mb-3">
+        <label class="col-lg-3 control-label">Category</label>
+        <div class="col-lg-9">
+          <select class="form-control" name="categoryId">
+            <option th:each="option: ${categories.options}" th:value="${option.id}" th:text="${option.label}">
+              Label
+            </option>
+          </select>
+        </div>
+      </div>
+      <!-- Description -->
+      <div class="form-group mb-3">
+        <label class="col-lg-3 control-label">Description</label>
+        <div class="col-lg-9">
+          <textarea class="form-control" name="description" rows="5" required th:field="${dto.description}"></textarea>
+        </div>
+      </div>
+      <!-- ISBN -->
+      <div class="form-group mb-3">
+        <label class="col-lg-3 control-label">ISBN</label>
+        <div class="col-lg-9">
+          <input type="text" class="form-control" name="isbn" required th:value="${dto.isbn}"/>
+        </div>
+      </div>
+      <!-- Image -->
+      <div class="form-group mb-3">
+        <label class="col-lg-3 control-label">Image</label>
+        <div class="col-lg-9">
+          <input type="text" class="form-control" name="image" required th:value="${dto.image}"/>
+        </div>
+      </div>
+      <!-- Pages -->
+      <div class="form-group mb-3">
+        <label class="col-lg-3 control-label">Pages</label>
+        <div class="col-lg-9">
+          <input type="number" class="form-control" name="pages" required th:value="${dto.pages}"/>
+        </div>
+      </div>
+      <div class="form-group mb-3">
+        <div class="col-lg-12 col-lg-offset-3">
+          <!-- Form actions -->
+          <button th:each="action: ${form.actions}"
+                  th:text="${action.label}"
+                  th:value="${action.name}"
+                  th:classappend="${action.type}"
+                  name="action" type="submit" class="btn m-1">Label
+          </button>
+        </div>
+      </div>
+      <input type="hidden" name="id" th:value="${dto.id}"/>
+    </fieldset>
+  </form>
+</div>

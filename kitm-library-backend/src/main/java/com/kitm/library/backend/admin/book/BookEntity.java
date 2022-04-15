@@ -1,11 +1,8 @@
-package com.kitm.library.backend.domain.book;
+package com.kitm.library.backend.admin.book;
 
 import com.kitm.library.backend.admin.author.AuthorEntity;
 import com.kitm.library.backend.admin.category.CategoryEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -20,6 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 public class BookEntity {
 

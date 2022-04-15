@@ -19,8 +19,8 @@
 
             <h2 th:text="${form.header}">Header</h2>
             <p th:text="${form.description}">Description</p>
-            <!-- Category form -->
-            <form th:replace="categories/form.html::form(form = ${form}, dto = ${dto})"></form>
+            <!-- Book form -->
+            <form th:replace="books/form.html::form(form = ${form}, dto = ${dto}, categories = ${categories}, authors = ${authors})"></form>
 
           </main>
         </div>

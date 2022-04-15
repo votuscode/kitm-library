@@ -3,7 +3,7 @@ package com.kitm.library.backend.admin.author.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kitm.library.api.author.dto.AuthorDto;
 import com.kitm.library.api.author.dto.UpsertAuthorDto;
-import com.kitm.library.backend.admin.common.dto.ISubmitFormDto;
+import com.kitm.library.backend.admin.common.interfaces.ISubmitFormDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

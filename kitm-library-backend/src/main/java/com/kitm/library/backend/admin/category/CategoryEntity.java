@@ -1,11 +1,12 @@
 package com.kitm.library.backend.admin.category;
 
-import com.kitm.library.backend.domain.book.BookEntity;
+import com.kitm.library.backend.admin.book.BookEntity;
 import lombok.*;
-import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author votuscode (https://github.com/votuscode)

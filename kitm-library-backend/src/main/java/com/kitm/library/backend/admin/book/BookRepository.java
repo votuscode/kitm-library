@@ -1,4 +1,4 @@
-package com.kitm.library.backend.domain.book;
+package com.kitm.library.backend.admin.book;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

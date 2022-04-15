@@ -1,6 +1,6 @@
 package com.kitm.library.backend.admin.author;
 
-import com.kitm.library.backend.domain.book.BookEntity;
+import com.kitm.library.backend.admin.book.BookEntity;
 import lombok.*;
 
 import javax.persistence.*;

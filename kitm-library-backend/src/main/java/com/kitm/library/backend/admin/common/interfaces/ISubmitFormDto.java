@@ -1,4 +1,4 @@
-package com.kitm.library.backend.admin.common.dto;
+package com.kitm.library.backend.admin.common.interfaces;
 
 import lombok.AllArgsConstructor;
 

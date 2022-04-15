@@ -3,7 +3,7 @@ package com.kitm.library.backend.admin.category.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kitm.library.api.category.dto.CategoryDto;
 import com.kitm.library.api.category.dto.UpsertCategoryDto;
-import com.kitm.library.backend.admin.common.dto.ISubmitFormDto;
+import com.kitm.library.backend.admin.common.interfaces.ISubmitFormDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
