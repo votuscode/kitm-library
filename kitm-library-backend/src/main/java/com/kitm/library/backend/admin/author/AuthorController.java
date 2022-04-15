@@ -1,10 +1,9 @@
-package com.kitm.library.backend.admin;
+package com.kitm.library.backend.admin.author;
 
-import com.kitm.library.backend.admin.dto.SubmitAuthorFormDto;
-import com.kitm.library.backend.admin.models.Form;
-import com.kitm.library.backend.admin.models.ItemList;
-import com.kitm.library.backend.admin.models.Layout;
-import com.kitm.library.backend.domain.author.AuthorService;
+import com.kitm.library.backend.admin.author.dto.SubmitAuthorFormDto;
+import com.kitm.library.backend.admin.common.models.Form;
+import com.kitm.library.backend.admin.common.models.ItemList;
+import com.kitm.library.backend.admin.common.models.Layout;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +21,7 @@ import java.util.UUID;
  */
 @Controller
 @RequiredArgsConstructor
-public class AuthorsController {
+public class AuthorController {
 
   private final AuthorService authorService;
 
@@ -31,18 +30,30 @@ public class AuthorsController {
 
     model.addAttribute("layout", Layout.create(Layout.Pages.Authors));
 
-    model.addAttribute("itemList", createItemList());
+    model.addAttribute("itemList", new ItemList(
+        "Authors",
+        "Authors page",
+        new ItemList.Action("Add author", "/admin/authors/add"),
+        authorService.findAll().stream()
+            .map(author -> ItemList.Item.builder()
+                .name(author.getName())
+                .description(author.getDescription())
+                .info("Books: " + author.getBooks())
+                .href("/admin/authors/" + author.getId())
+                .build())
+            .toList()
+    ));
 
-    return "authors/authors";
+    return "layout/item-list";
   }
 
   @PostMapping("/admin/authors/update")
-  public String updateAuthor(@ModelAttribute SubmitAuthorFormDto upsertAuthorDto, Model model) {
+  public String updateAuthor(@ModelAttribute SubmitAuthorFormDto submitAuthorFormDto, Model model) {
 
-    switch (upsertAuthorDto.getAction()) {
-      case Add -> authorService.createOne(upsertAuthorDto);
-      case Update -> authorService.updateOne(upsertAuthorDto.getId(), upsertAuthorDto);
-      case Delete -> authorService.deleteOne(upsertAuthorDto.getId());
+    switch (submitAuthorFormDto.getAction()) {
+      case Add -> authorService.createOne(submitAuthorFormDto);
+      case Update -> authorService.updateOne(submitAuthorFormDto.getId(), submitAuthorFormDto);
+      case Delete -> authorService.deleteOne(submitAuthorFormDto.getId());
     }
 
     return "redirect:/admin/authors";
@@ -56,7 +67,7 @@ public class AuthorsController {
     model.addAttribute("form", Form.add("Add author", "Add author page", "/admin/authors/update"));
     model.addAttribute("dto", SubmitAuthorFormDto.create());
 
-    return "authors/update-author";
+    return "authors/update";
   }
 
   @GetMapping("/admin/authors/{id}")
@@ -67,23 +78,6 @@ public class AuthorsController {
     model.addAttribute("form", Form.update("Update author", "Update author page", "/admin/authors/update"));
     model.addAttribute("dto", SubmitAuthorFormDto.update(authorService.getOne(id)));
 
-    return "authors/update-author";
-  }
-
-  private ItemList createItemList() {
-
-    return new ItemList(
-        "Authors",
-        "Authors page",
-        new ItemList.Action("Add author", "/admin/authors/add"),
-        authorService.findAll().stream()
-            .map(author -> ItemList.Item.builder()
-                .name(author.getName())
-                .description(author.getDescription())
-                .info("Books: " + author.getBooks())
-                .href("/admin/authors/" + author.getId())
-                .build())
-            .toList()
-    );
+    return "authors/update";
   }
 }

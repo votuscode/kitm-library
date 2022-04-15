@@ -1,10 +1,8 @@
-package com.kitm.library.backend.admin.models;
+package com.kitm.library.backend.admin.common.models;
 
-import com.kitm.library.api.author.dto.AuthorDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
-import java.util.Collection;
 import java.util.List;
 
 /**

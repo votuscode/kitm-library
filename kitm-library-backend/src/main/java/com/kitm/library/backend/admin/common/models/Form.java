@@ -1,6 +1,6 @@
-package com.kitm.library.backend.admin.models;
+package com.kitm.library.backend.admin.common.models;
 
-import com.kitm.library.backend.admin.dto.ISubmitFormDto;
+import com.kitm.library.backend.admin.common.dto.ISubmitFormDto;
 import lombok.AllArgsConstructor;
 
 import java.util.List;

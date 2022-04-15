@@ -19,7 +19,7 @@ import java.util.Collection;
 @RestController()
 @RequestMapping(path = "/api/users")
 @RequiredArgsConstructor
-public class UserController {
+public class UserRestController {
 
   private final IUserService userService;
 

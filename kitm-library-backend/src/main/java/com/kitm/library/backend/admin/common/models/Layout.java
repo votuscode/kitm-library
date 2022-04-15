@@ -1,4 +1,4 @@
-package com.kitm.library.backend.admin.models;
+package com.kitm.library.backend.admin.common.models;
 
 import lombok.AllArgsConstructor;
 

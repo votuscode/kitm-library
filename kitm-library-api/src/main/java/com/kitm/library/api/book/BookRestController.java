@@ -1,6 +1,6 @@
-package com.kitm.library.api.author;
+package com.kitm.library.api.book;
 
-import com.kitm.library.api.author.dto.AuthorDto;
+import com.kitm.library.api.book.dto.BookDto;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -17,23 +17,23 @@ import java.util.UUID;
  * @version 1.0
  * @since 10.04.22
  */
-@Api(value = "Author")
+@Api(value = "Book")
 @RestController
-@RequestMapping(path = "/api/authors")
+@RequestMapping(path = "/api/books")
 @RequiredArgsConstructor
-public class AuthorController {
+public class BookRestController {
 
-  private final IAuthorService authorService;
+  private final IBookService bookService;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Collection<AuthorDto> getAuthors() {
+  public Collection<BookDto> getBooks() {
 
-    return authorService.findAll().stream().toList();
+    return bookService.findAll().stream().toList();
   }
 
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public AuthorDto getAuthor(@PathVariable("id") UUID id) {
+  public BookDto getBook(@PathVariable("id") UUID id) {
 
-    return authorService.getOne(id);
+    return bookService.getOne(id);
   }
 }

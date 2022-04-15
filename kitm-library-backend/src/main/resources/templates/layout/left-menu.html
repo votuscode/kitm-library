@@ -1,7 +1,7 @@
 <!--Left menu-->
 <div th:fragment="left-menu(layout)" class="col-3 d-none d-lg-block">
-  <!--/*@thymesVar id="layout" type="com.kitm.library.backend.admin.models.Layout"*/-->
-  <!--/*@thymesVar id="item" type="com.kitm.library.backend.admin.models.Layout.Item"*/-->
+  <!--/*@thymesVar id="layout" type="com.kitm.library.backend.admin.common.models.Layout"*/-->
+  <!--/*@thymesVar id="item" type="com.kitm.library.backend.admin.common.models.Layout.Item"*/-->
   <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
     <a th:each="item: ${layout.items}"
        th:href="${item.href}"

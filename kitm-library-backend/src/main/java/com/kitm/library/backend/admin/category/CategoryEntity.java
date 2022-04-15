@@ -1,10 +1,7 @@
-package com.kitm.library.backend.domain.category;
+package com.kitm.library.backend.admin.category;
 
 import com.kitm.library.backend.domain.book.BookEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
@@ -20,6 +17,7 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 public class CategoryEntity {
 

@@ -1,6 +1,6 @@
 <!--Item list-->
 <div th:fragment="item-list(itemList)" class="row mb-3">
-  <!--/*@thymesVar id="itemList" type="com.kitm.library.backend.admin.models.ItemList"*/-->
+  <!--/*@thymesVar id="itemList" type="com.kitm.library.backend.admin.common.models.ItemList"*/-->
   <div class="col">
     <div class="row">
       <div class="col">
@@ -18,7 +18,7 @@
     </div>
 
     <ul class="list-group">
-      <!--/*@thymesVar id="item" type="com.kitm.library.backend.admin.models.ItemList.Item"*/-->
+      <!--/*@thymesVar id="item" type="com.kitm.library.backend.admin.common.models.ItemList.Item"*/-->
       <a th:href="${item.href}"
          class="list-group-item list-group-item-action flex-column align-items-start"
          th:each="item: ${itemList.items}">

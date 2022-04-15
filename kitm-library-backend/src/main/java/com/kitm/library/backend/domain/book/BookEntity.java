@@ -1,7 +1,7 @@
 package com.kitm.library.backend.domain.book;
 
-import com.kitm.library.backend.domain.author.AuthorEntity;
-import com.kitm.library.backend.domain.category.CategoryEntity;
+import com.kitm.library.backend.admin.author.AuthorEntity;
+import com.kitm.library.backend.admin.category.CategoryEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

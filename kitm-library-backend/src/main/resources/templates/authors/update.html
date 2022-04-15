@@ -20,7 +20,7 @@
             <h2 th:text="${form.header}">Header</h2>
             <p th:text="${form.description}">Description</p>
             <!-- Author form -->
-            <form th:replace="authors/author-form.html::author-form(form = ${form}, dto = ${dto})"></form>
+            <form th:replace="authors/form.html::form(form = ${form}, dto = ${dto})"></form>
 
           </main>
         </div>

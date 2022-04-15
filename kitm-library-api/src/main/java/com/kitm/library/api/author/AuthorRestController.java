@@ -1,6 +1,6 @@
-package com.kitm.library.api.category;
+package com.kitm.library.api.author;
 
-import com.kitm.library.api.category.dto.CategoryDto;
+import com.kitm.library.api.author.dto.AuthorDto;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -17,23 +17,23 @@ import java.util.UUID;
  * @version 1.0
  * @since 10.04.22
  */
-@Api(value = "Category")
+@Api(value = "Author")
 @RestController
-@RequestMapping(path = "/api/categories")
+@RequestMapping(path = "/api/authors")
 @RequiredArgsConstructor
-public class CategoryController {
+public class AuthorRestController {
 
-  private final ICategoryService categoryService;
+  private final IAuthorService authorService;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Collection<CategoryDto> getCategories() {
+  public Collection<AuthorDto> getAuthors() {
 
-    return categoryService.findAll().stream().toList();
+    return authorService.findAll().stream().toList();
   }
 
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public CategoryDto getCategory(@PathVariable("id") UUID id) {
+  public AuthorDto getAuthor(@PathVariable("id") UUID id) {
 
-    return categoryService.getOne(id);
+    return authorService.getOne(id);
   }
 }

@@ -1,4 +1,4 @@
-package com.kitm.library.api.author.dto;
+package com.kitm.library.api.category.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -11,13 +11,13 @@ import javax.validation.constraints.NotNull;
 /**
  * @author votuscode (https://github.com/votuscode)
  * @version 1.0
- * @since 15.04.22
+ * @since 10.04.22
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateAuthorDto {
+public class UpsertCategoryDto {
 
   @NotNull
   @JsonProperty("name")

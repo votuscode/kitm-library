@@ -2,16 +2,16 @@ package com.kitm.library.backend;
 
 import com.google.common.collect.ImmutableSet;
 import com.kitm.library.api.author.dto.AuthorDto;
-import com.kitm.library.api.author.dto.CreateAuthorDto;
+import com.kitm.library.api.author.dto.UpsertAuthorDto;
 import com.kitm.library.api.book.dto.CreateBookDto;
 import com.kitm.library.api.category.dto.CategoryDto;
-import com.kitm.library.api.category.dto.CreateCategoryDto;
+import com.kitm.library.api.category.dto.UpsertCategoryDto;
 import com.kitm.library.api.role.IRoleService;
 import com.kitm.library.api.role.dto.CreateRoleDto;
 import com.kitm.library.api.user.dto.CreateUserDto;
-import com.kitm.library.backend.domain.author.AuthorService;
+import com.kitm.library.backend.admin.author.AuthorService;
 import com.kitm.library.backend.domain.book.BookService;
-import com.kitm.library.backend.domain.category.CategoryService;
+import com.kitm.library.backend.admin.category.CategoryService;
 import com.kitm.library.backend.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -53,12 +53,12 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
         .roles(ImmutableSet.of("ADMIN"))
         .build());
 
-    final CategoryDto categoryDto = categoryService.createOne(CreateCategoryDto.builder()
+    final CategoryDto categoryDto = categoryService.createOne(UpsertCategoryDto.builder()
         .name("Programming")
         .description("Books about programming")
         .build());
 
-    final AuthorDto authorDto = authorService.createOne(CreateAuthorDto.builder()
+    final AuthorDto authorDto = authorService.createOne(UpsertAuthorDto.builder()
         .name("Robert C. Martin")
         .description("Colloquially called Uncle Bob, is an American software engineer, instructor, and best-selling author. He is most recognized for developing many software design principles and for being a founder of the influential Agile Manifesto.")
         .build());

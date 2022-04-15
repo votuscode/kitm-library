@@ -8,15 +8,15 @@ import java.util.UUID;
  * @version 1.0
  * @since 15.04.22
  */
-public interface ICrudService<Dto, UpdateDto> {
+public interface ICrudService<Dto, UpsertDto> {
 
   Collection<Dto> findAll();
 
   Dto getOne(UUID id);
 
-  Dto createOne(UpdateDto updateDto);
+  Dto createOne(UpsertDto upsertDto);
 
-  Dto updateOne(UUID id, UpdateDto updateDto);
+  Dto updateOne(UUID id, UpsertDto upsertDto);
 
   void deleteOne(UUID id);
 }

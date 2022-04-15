@@ -1,9 +1,9 @@
-package com.kitm.library.backend.admin.dto;
+package com.kitm.library.backend.admin.author.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kitm.library.api.author.dto.AuthorDto;
-import com.kitm.library.api.author.dto.CreateAuthorDto;
-import lombok.AllArgsConstructor;
+import com.kitm.library.api.author.dto.UpsertAuthorDto;
+import com.kitm.library.backend.admin.common.dto.ISubmitFormDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class SubmitAuthorFormDto extends CreateAuthorDto implements ISubmitFormDto {
+public class SubmitAuthorFormDto extends UpsertAuthorDto implements ISubmitFormDto {
 
   @JsonProperty("id")
   private UUID id;

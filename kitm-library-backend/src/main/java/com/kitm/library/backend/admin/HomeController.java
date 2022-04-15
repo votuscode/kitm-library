@@ -1,6 +1,6 @@
 package com.kitm.library.backend.admin;
 
-import com.kitm.library.backend.admin.models.Layout;
+import com.kitm.library.backend.admin.common.models.Layout;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

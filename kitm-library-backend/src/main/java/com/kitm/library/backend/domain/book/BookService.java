@@ -3,10 +3,10 @@ package com.kitm.library.backend.domain.book;
 import com.kitm.library.api.book.IBookService;
 import com.kitm.library.api.book.dto.BookDto;
 import com.kitm.library.api.book.dto.CreateBookDto;
-import com.kitm.library.backend.domain.author.AuthorEntity;
-import com.kitm.library.backend.domain.author.AuthorRepository;
-import com.kitm.library.backend.domain.category.CategoryEntity;
-import com.kitm.library.backend.domain.category.CategoryRepository;
+import com.kitm.library.backend.admin.author.AuthorEntity;
+import com.kitm.library.backend.admin.author.AuthorRepository;
+import com.kitm.library.backend.admin.category.CategoryEntity;
+import com.kitm.library.backend.admin.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

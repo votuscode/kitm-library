@@ -1,8 +1,9 @@
-package com.kitm.library.backend.domain.category;
+package com.kitm.library.backend.admin.category;
 
 import com.kitm.library.api.category.ICategoryService;
 import com.kitm.library.api.category.dto.CategoryDto;
-import com.kitm.library.api.category.dto.CreateCategoryDto;
+import com.kitm.library.api.category.dto.UpsertCategoryDto;
+import com.kitm.library.backend.admin.author.AuthorEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -44,16 +45,36 @@ public class CategoryService implements ICategoryService {
   }
 
   @Override
-  public CategoryDto createOne(CreateCategoryDto createCategoryDto) {
+  public CategoryDto createOne(UpsertCategoryDto upsertCategoryDto) {
 
     final CategoryEntity categoryEntity = CategoryEntity.builder()
-        .name(createCategoryDto.getName())
-        .description(createCategoryDto.getDescription())
+        .name(upsertCategoryDto.getName())
+        .description(upsertCategoryDto.getDescription())
         .build();
 
     return convert(
         categoryRepository.save(categoryEntity)
     );
+  }
+
+  @Override
+  public CategoryDto updateOne(UUID id, UpsertCategoryDto upsertCategoryDto) {
+
+    final CategoryEntity categoryEntity = categoryRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Could not find author"));
+
+    categoryEntity.setName(upsertCategoryDto.getName());
+    categoryEntity.setDescription(upsertCategoryDto.getDescription());
+
+    return convert(
+        categoryRepository.save(categoryEntity)
+    );
+  }
+
+  @Override
+  public void deleteOne(UUID id) {
+
+    categoryRepository.deleteById(id);
   }
 
   private CategoryDto convert(CategoryEntity categoryEntity) {

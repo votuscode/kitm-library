@@ -1,8 +1,8 @@
-package com.kitm.library.backend.domain.author;
+package com.kitm.library.backend.admin.author;
 
 import com.kitm.library.api.author.IAuthorService;
 import com.kitm.library.api.author.dto.AuthorDto;
-import com.kitm.library.api.author.dto.CreateAuthorDto;
+import com.kitm.library.api.author.dto.UpsertAuthorDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +44,7 @@ public class AuthorService implements IAuthorService {
   }
 
   @Override
-  public AuthorDto createOne(CreateAuthorDto upsertAuthorDto) {
+  public AuthorDto createOne(UpsertAuthorDto upsertAuthorDto) {
 
     final AuthorEntity authorEntity = AuthorEntity.builder()
         .name(upsertAuthorDto.getName())
@@ -57,13 +57,7 @@ public class AuthorService implements IAuthorService {
   }
 
   @Override
-  public void deleteOne(UUID id) {
-
-    authorRepository.deleteById(id);
-  }
-
-  @Override
-  public AuthorDto updateOne(UUID id, CreateAuthorDto upsertAuthorDto) {
+  public AuthorDto updateOne(UUID id, UpsertAuthorDto upsertAuthorDto) {
 
     final AuthorEntity authorEntity = authorRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Could not find author"));
@@ -74,6 +68,12 @@ public class AuthorService implements IAuthorService {
     return convert(
         authorRepository.save(authorEntity)
     );
+  }
+
+  @Override
+  public void deleteOne(UUID id) {
+
+    authorRepository.deleteById(id);
   }
 
   private AuthorDto convert(AuthorEntity authorEntity) {
