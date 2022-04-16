@@ -77,7 +77,7 @@ public class CategoryService implements ICategoryService {
     categoryRepository.deleteById(id);
   }
 
-  private CategoryDto convert(CategoryEntity categoryEntity) {
+  public CategoryDto convert(CategoryEntity categoryEntity) {
 
     final Integer books = Optional.ofNullable(categoryEntity.getBookEntitySet())
         .map(Set::size)

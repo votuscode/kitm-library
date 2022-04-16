@@ -1,6 +1,7 @@
 <!--Item list-->
 <div th:fragment="item-list(itemList)" class="row mb-3">
   <!--/*@thymesVar id="itemList" type="com.kitm.library.backend.admin.common.models.ItemList"*/-->
+  <!--/*@thymesVar id="item" type="com.kitm.library.backend.admin.common.models.ItemList.Item"*/-->
   <div class="col">
     <div class="row">
       <div class="col">
@@ -17,17 +18,26 @@
       </div>
     </div>
 
-    <ul class="list-group">
-      <!--/*@thymesVar id="item" type="com.kitm.library.backend.admin.common.models.ItemList.Item"*/-->
+    <ul class="list-group card" style="max-height: calc(100vh - 12rem); overflow: auto">
       <a th:href="${item.href}"
          class="list-group-item list-group-item-action flex-column align-items-start"
-         th:each="item: ${itemList.items}">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1" th:text="${item.name}">Name</h5>
-          <small th:if="${item.badge}" th:text="${item.badge}">Badge</small>
+         th:each="item: ${itemList.items}"
+      >
+        <div class="row">
+          <!-- Image -->
+          <div class="col-2" th:unless="${#strings.isEmpty(item.image)}">
+            <img th:src="${item.image}" alt="Image" style="width: 100%"/>
+          </div>
+          <!-- Content -->
+          <div th:class="${#strings.isEmpty(item.image)} ? 'col' : 'col-10'">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1" th:text="${item.name}">Name</h5>
+              <small th:if="${item.badge}" th:text="${item.badge}">Badge</small>
+            </div>
+            <p class="mb-1" th:text="${item.description}">Description</p>
+            <small th:text="${item.info}">Info</small>
+          </div>
         </div>
-        <p class="mb-1" th:text="${item.description}">Description</p>
-        <small th:text="${item.info}">Info</small>
       </a>
     </ul>
 

@@ -38,7 +38,6 @@ public class UpsertBookDto {
   @JsonProperty("isbn")
   private String isbn;
 
-  @NotNull
   @JsonProperty("image")
   private String image;
 

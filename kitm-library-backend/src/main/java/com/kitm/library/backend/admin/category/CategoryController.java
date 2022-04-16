@@ -38,7 +38,7 @@ public class CategoryController {
             .map(category -> ItemList.Item.builder()
                 .name(category.getName())
                 .description(category.getDescription())
-                .info("Books: " + category.getBooks())
+                .info(String.format("Books: %s", category.getBooks()))
                 .href("/admin/categories/" + category.getId())
                 .build())
             .toList()

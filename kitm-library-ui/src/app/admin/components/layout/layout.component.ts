@@ -53,7 +53,7 @@ import { changeDetection } from '~/change-detection.strategy';
     </nav>
 
     <!-- Main container -->
-    <div class="container-fluid" style="height: calc(100vh - 5rem); overflow: auto">
+    <div class="container-fluid" style="height: calc(100vh - 6rem); overflow: hidden">
       <div class="row">
         <!-- Left menu -->
         <div class="col-3 d-none d-lg-block">

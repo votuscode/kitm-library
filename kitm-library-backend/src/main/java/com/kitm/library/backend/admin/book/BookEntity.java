@@ -29,15 +29,16 @@ public class BookEntity {
   @Column(nullable = false)
   private String name;
 
-  @Column(nullable = false)
+  @Column()
   private String description;
 
-  @Column(nullable = false)
+  @Column()
   private Integer pages;
 
-  @Column(nullable = false, length = 13)
+  @Column(length = 32)
   private String isbn;
 
+  @Lob
   @Column
   private String image;
 

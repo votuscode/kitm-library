@@ -76,7 +76,7 @@ public class AuthorService implements IAuthorService {
     authorRepository.deleteById(id);
   }
 
-  private AuthorDto convert(AuthorEntity authorEntity) {
+  public AuthorDto convert(AuthorEntity authorEntity) {
 
     final Integer books = Optional.ofNullable(authorEntity.getBookEntitySet())
         .map(Set::size)

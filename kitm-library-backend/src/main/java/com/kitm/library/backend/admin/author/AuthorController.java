@@ -38,7 +38,7 @@ public class AuthorController {
             .map(author -> ItemList.Item.builder()
                 .name(author.getName())
                 .description(author.getDescription())
-                .info("Books: " + author.getBooks())
+                .info(String.format("Books: %s", author.getBooks()))
                 .href("/admin/authors/" + author.getId())
                 .build())
             .toList()

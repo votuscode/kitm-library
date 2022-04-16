@@ -26,6 +26,7 @@ public class ItemList {
   @Builder
   @AllArgsConstructor
   public static class Item {
+    public String image;
     public String name;
     public String description;
     public String info;

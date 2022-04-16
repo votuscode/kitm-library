@@ -1,6 +1,7 @@
 package com.kitm.library.backend.admin.book;
 
 import com.kitm.library.backend.admin.author.AuthorService;
+import com.kitm.library.backend.admin.book.dto.BookDetailDto;
 import com.kitm.library.backend.admin.book.dto.SubmitBookFormDto;
 import com.kitm.library.backend.admin.category.CategoryService;
 import com.kitm.library.backend.admin.common.models.Form;
@@ -28,6 +29,8 @@ public class BookController {
 
   private final BookService bookService;
 
+  private final BookDetailService bookDetailService;
+
   private final AuthorService authorService;
 
   private final CategoryService categoryService;
@@ -41,11 +44,12 @@ public class BookController {
         "Books",
         "Books page",
         new ItemList.Action("Add book", "/admin/books/add"),
-        bookService.findAll().stream()
+        bookDetailService.findAll().stream()
             .map(book -> ItemList.Item.builder()
+                .image(book.getImage())
                 .name(book.getName())
                 .description(book.getDescription())
-                .info("Some info")
+                .info(String.format("Author: %s, category: %s", book.getAuthor().getName(), book.getCategory().getName()))
                 .href("/admin/books/" + book.getId())
                 .build())
             .toList()

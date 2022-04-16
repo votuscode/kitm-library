@@ -1,6 +1,7 @@
-package com.kitm.library.api.book.dto;
+package com.kitm.library.backend.admin.book.dto;
 
-import com.kitm.library.api.common.IGenericDto;
+import com.kitm.library.api.author.dto.AuthorDto;
+import com.kitm.library.api.category.dto.CategoryDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,11 +11,11 @@ import java.util.UUID;
 /**
  * @author votuscode (https://github.com/votuscode)
  * @version 1.0
- * @since 10.04.22
+ * @since 16.04.22
  */
 @Data
 @Builder
-public class BookDto implements IGenericDto {
+public class BookDetailDto {
 
   @NotNull
   private UUID id;
@@ -31,8 +32,8 @@ public class BookDto implements IGenericDto {
   private String image;
 
   @NotNull
-  private UUID authorId;
+  private AuthorDto author;
 
   @NotNull
-  private UUID categoryId;
+  private CategoryDto category;
 }
