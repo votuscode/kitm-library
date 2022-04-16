@@ -41,6 +41,9 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
   @Value("${admin.password}")
   private String adminPassword;
 
+  @Value("${user.password}")
+  private String userPassword;
+
   @Override
   public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
 
@@ -59,6 +62,15 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
         .passwordOriginal(adminPassword)
         .passwordConfirmation(adminPassword)
         .roles(ImmutableSet.of("ADMIN", "USER"))
+        .build());
+
+    userService.createOne(CreateUserDto.builder()
+        .username("diego")
+        .name("Diego del Morao")
+        .email("diego.del.morao@mail.com")
+        .passwordOriginal(userPassword)
+        .passwordConfirmation(userPassword)
+        .roles(ImmutableSet.of("USER"))
         .build());
 
     final CategoryDto categoryDto = categoryService.createOne(UpsertCategoryDto.builder()

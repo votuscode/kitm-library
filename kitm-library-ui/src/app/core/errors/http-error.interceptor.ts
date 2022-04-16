@@ -7,6 +7,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable, Optional, Provider } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ToastService } from '~/app/toast.service';
@@ -40,6 +41,11 @@ class HttpErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
+        if (err.status === 403) {
+          void this.router.navigate(['/login']);
+          return throwError(err);
+        }
+
         if (this.toastService) {
           console.log(extractErrorMessage(err));
           this.toastService.error(...extractErrorMessage(err));
@@ -49,7 +55,7 @@ class HttpErrorInterceptor implements HttpInterceptor {
     );
   }
 
-  constructor(@Optional() readonly toastService: ToastService) {
+  constructor(@Optional() readonly toastService: ToastService, readonly router: Router) {
   }
 }
 

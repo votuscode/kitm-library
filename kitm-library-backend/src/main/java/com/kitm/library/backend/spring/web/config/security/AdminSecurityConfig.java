@@ -35,7 +35,7 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
         .formLogin()
         .loginPage("/login")
         .failureUrl("/login?error")
-        .defaultSuccessUrl("/admin")
+        .defaultSuccessUrl("/")
         .and()
         .logout()
         .logoutSuccessUrl("/login?logout")
@@ -51,9 +51,12 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   private TokenBasedRememberMeServices getRememberMeServices() {
+
     TokenBasedRememberMeServices services = new TokenBasedRememberMeServices(jwtSecret, authenticationUserService);
+
     services.setCookieName(cookieName);
     services.setTokenValiditySeconds(3000);
+
     return services;
   }
 }

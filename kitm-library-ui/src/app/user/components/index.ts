@@ -1,4 +1,4 @@
-import { UserView } from '~/app/user/components/user.view';
+import { UserView } from './user.view';
 
 export const components = [UserView];
 

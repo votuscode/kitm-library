@@ -11,7 +11,7 @@ export interface ListItem {
   id: string;
   name: string;
   badge?: string;
-  description: string;
+  description?: string;
   info: string;
   link: string;
 }

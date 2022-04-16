@@ -1,5 +1,6 @@
 package com.kitm.library.backend.spring.web.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -16,6 +17,7 @@ import java.io.IOException;
  * @version 1.0
  * @since 23.09.21
  */
+@Slf4j
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
   private static final String API_CONTEXT_PATH = "/api";
@@ -33,7 +35,8 @@ public class WebConfig implements WebMvcConfigurer {
         .addResolver(new PathResourceResolver() {
           @Override
           protected Resource getResource(String resourcePath, Resource location) throws IOException {
-            System.out.println(resourcePath);
+            log.info(resourcePath);
+
             Resource requestedResource = location.createRelative(resourcePath);
             boolean resourceFound = requestedResource.exists() && requestedResource.isReadable();
             return resourceFound ? requestedResource : new ClassPathResource("/com/kitm/library/ui/index.html");

@@ -25,6 +25,7 @@ import java.util.UUID;
 @Getter
 @Builder
 public class UserEntity implements Serializable, UserDetails {
+
   @Id
   @GeneratedValue()
   @Column(updatable = false, nullable = false, length = 16)
@@ -76,5 +77,11 @@ public class UserEntity implements Serializable, UserDetails {
   @Override
   public boolean isEnabled() {
     return true;
+  }
+
+  public boolean hasRole(String expected) {
+    return roles.stream()
+        .map(RoleEntity::getAuthority)
+        .anyMatch(authority -> authority.equals(expected));
   }
 }

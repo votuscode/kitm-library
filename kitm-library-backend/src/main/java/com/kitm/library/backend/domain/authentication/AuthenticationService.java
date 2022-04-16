@@ -28,10 +28,17 @@ public class AuthenticationService implements IAuthenticationService {
 
   @Override
   public AuthenticatedDto login(LoginDto loginDto) {
-    Authentication authenticate = authenticationManager
+
+    Authentication authentication = authenticationManager
         .authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
 
-    UserEntity userEntity = (UserEntity) authenticate.getPrincipal();
+    return convert(authentication);
+  }
+
+  @Override
+  public AuthenticatedDto convert(Authentication authentication) {
+
+    UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
     String token = jwtTokenUtil.generateAccessToken(userEntity);
     Date expires = jwtTokenUtil.getExpirationDate(token);

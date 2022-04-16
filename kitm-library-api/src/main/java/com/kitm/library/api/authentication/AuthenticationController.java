@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,10 +32,23 @@ public class AuthenticationController {
 
   @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<AuthenticatedDto> login(@RequestBody @Valid LoginDto loginDto) {
+
     AuthenticatedDto authenticatedDto = authenticationService.login(loginDto);
 
     return ResponseEntity.ok()
         .header(HttpHeaders.AUTHORIZATION, authenticatedDto.getToken())
         .body(authenticatedDto);
+  }
+
+  @PostMapping(value = "/authenticated", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<AuthenticatedDto> authenticated(Authentication authentication) {
+
+    if (authentication == null) {
+      throw new AccessDeniedException("Not authenticated");
+    }
+
+    AuthenticatedDto authenticatedDto = authenticationService.convert(authentication);
+
+    return ResponseEntity.ok().body(authenticatedDto);
   }
 }
