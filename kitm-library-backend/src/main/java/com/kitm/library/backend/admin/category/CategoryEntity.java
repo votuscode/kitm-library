@@ -33,6 +33,6 @@ public class CategoryEntity {
   @Column(nullable = false)
   private String description;
 
-  @OneToMany(mappedBy = "categoryEntity")
+  @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   private Set<BookEntity> bookEntitySet = new HashSet<>();
 }

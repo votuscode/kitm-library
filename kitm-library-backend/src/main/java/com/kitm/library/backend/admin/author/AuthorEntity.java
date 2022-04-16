@@ -31,6 +31,6 @@ public class AuthorEntity {
   @Column(nullable = false)
   private String description;
 
-  @OneToMany(mappedBy = "authorEntity", orphanRemoval = true, fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "authorEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   private Set<BookEntity> bookEntitySet = new HashSet<>();
 }
