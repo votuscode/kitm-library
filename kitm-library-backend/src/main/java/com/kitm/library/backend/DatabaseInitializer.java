@@ -48,13 +48,17 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
         .name("ADMIN")
         .build());
 
+    roleService.createOne(CreateRoleDto.builder()
+        .name("USER")
+        .build());
+
     userService.createOne(CreateUserDto.builder()
         .username("admin")
         .name("John Doe")
         .email("john.doe@mail.com")
         .passwordOriginal(adminPassword)
         .passwordConfirmation(adminPassword)
-        .roles(ImmutableSet.of("ADMIN"))
+        .roles(ImmutableSet.of("ADMIN", "USER"))
         .build());
 
     final CategoryDto categoryDto = categoryService.createOne(UpsertCategoryDto.builder()

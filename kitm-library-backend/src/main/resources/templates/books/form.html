@@ -7,7 +7,7 @@
   <!--/*@thymesVar id="authors" type="com.kitm.library.backend.admin.common.models.SelectOptions"*/-->
   <!--/*@thymesVar id="option" type="com.kitm.library.backend.admin.common.models.SelectOptions.Option"*/-->
   <form th:action="${form.url}" th:method="${form.method}" class="form-horizontal">
-    <fieldset>
+    <fieldset style="height: calc(100vh - 12rem); overflow: auto; padding: 1rem; background: var(--bs-gray-100)">
       <!-- Name -->
       <div class="form-group mb-3">
         <label class="col-lg-3 control-label">Name</label>

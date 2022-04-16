@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <ul class="list-group card" style="max-height: calc(100vh - 12rem); overflow: auto">
+    <ul class="list-group card" style="height: calc(100vh - 12rem); overflow: auto; padding: 1rem; background: var(--bs-gray-100)">
       <a th:href="${item.href}"
          class="list-group-item list-group-item-action flex-column align-items-start"
          th:each="item: ${itemList.items}"
