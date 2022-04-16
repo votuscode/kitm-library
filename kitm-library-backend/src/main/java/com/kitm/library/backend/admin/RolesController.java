@@ -22,6 +22,7 @@ public class RolesController {
 
   @GetMapping("/admin/roles")
   public String rolesList(Model model) {
+
     model.addAttribute("roles", roleService.findAll());
     model.addAttribute("createRoleDto", new CreateRoleDto());
 
@@ -30,6 +31,7 @@ public class RolesController {
 
   @PostMapping("/admin/roles")
   public String addRole(@ModelAttribute CreateRoleDto createRoleDto, Model model) {
+
     roleService.createOne(createRoleDto);
 
     model.addAttribute("roles", roleService.findAll());

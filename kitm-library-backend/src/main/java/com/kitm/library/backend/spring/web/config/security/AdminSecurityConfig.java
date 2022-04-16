@@ -51,9 +51,12 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   private TokenBasedRememberMeServices getRememberMeServices() {
+
     TokenBasedRememberMeServices services = new TokenBasedRememberMeServices(jwtSecret, authenticationUserService);
+
     services.setCookieName(cookieName);
     services.setTokenValiditySeconds(3000);
+
     return services;
   }
 }

@@ -1,6 +1,7 @@
 import { AdminView } from '~/app/admin/components/admin.view';
-import { LayoutComponent } from '~/app/admin/components/layout.component';
-import { ItemListComponent } from '~/app/admin/components/item-list.component';
+import { LayoutComponent } from '~/app/admin/components/layout/layout.component';
+import { ItemListComponent } from '~/app/admin/components/item-list/item-list.component';
+import { ItemListNavigationComponent } from '~/app/admin/components/item-list/item-list-navigation.component';
 // author
 import { AuthorListComponent } from '~/app/admin/components/author/author-list.component';
 import { AuthorFormComponent } from '~/app/admin/components/author/author-form.component';
@@ -25,6 +26,7 @@ export const components = [
   AdminView,
   LayoutComponent,
   ItemListComponent,
+  ItemListNavigationComponent,
   // role
   RoleListComponent,
   // user

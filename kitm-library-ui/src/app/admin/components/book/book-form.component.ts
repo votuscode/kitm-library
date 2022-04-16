@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { BookDto } from '@api/model/bookDto';
 import { CategoryDto } from '@api/model/categoryDto';
-import { AsyncData } from '~/app/admin/components/item-list.component';
+import { AsyncData } from '~/app/admin/components/item-list/item-list.component';
 import { changeDetection } from '~/change-detection.strategy';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AuthorDto } from '@api/model/authorDto';
-import { AsyncData } from '~/app/admin/components/item-list.component';
+import { AsyncData } from '~/app/admin/components/item-list/item-list.component';
 import { changeDetection } from '~/change-detection.strategy';
 
 @Component({

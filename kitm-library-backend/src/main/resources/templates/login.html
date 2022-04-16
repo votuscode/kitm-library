@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:insert="layout::layout-head"></head>
+<head th:insert="layout/layout.html::layout-head"></head>
 <style>
     .login-form {
         width: 22rem;
@@ -16,7 +16,7 @@
 <body>
 <div class="container">
   <div class="card login-form">
-    <img src="kitm-logo.png" class="card-img-top" alt="KITM">
+    <img src="/assets/kitm-logo.png" class="card-img-top" alt="KITM">
     <div class="card-body">
       <h5 class="card-title">KITM Library</h5>
       <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident, veritatis.</p>
@@ -29,11 +29,11 @@
       <form method="post" th:action="@{/login}">
         <div class="form-group mb-3">
           <label for="username">Username</label>
-          <input name="username" type="text" class="form-control" id="username" placeholder="Username">
+          <input name="username" type="text" class="form-control" id="username" placeholder="Username" required>
         </div>
         <div class="form-group mb-3">
           <label for="password">Password</label>
-          <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+          <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
       </form>

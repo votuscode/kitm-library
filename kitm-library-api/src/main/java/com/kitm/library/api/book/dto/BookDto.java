@@ -1,5 +1,6 @@
 package com.kitm.library.api.book.dto;
 
+import com.kitm.library.api.common.IGenericDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
  */
 @Data
 @Builder
-public class BookDto {
+public class BookDto implements IGenericDto {
 
   @NotNull
   private UUID id;
@@ -21,16 +22,12 @@ public class BookDto {
   @NotNull
   private String name;
 
-  @NotNull
   private String description;
 
-  @NotNull
-  private Number pages;
+  private Integer pages;
 
-  @NotNull
   private String isbn;
 
-  @NotNull
   private String image;
 
   @NotNull

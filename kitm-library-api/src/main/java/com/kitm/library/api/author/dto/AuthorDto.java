@@ -1,5 +1,6 @@
 package com.kitm.library.api.author.dto;
 
+import com.kitm.library.api.common.IGenericDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
  */
 @Data
 @Builder
-public class AuthorDto {
+public class AuthorDto implements IGenericDto {
 
   @NotNull
   private UUID id;

@@ -3,8 +3,8 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ApiModule } from '@api/api.module';
 import { Configuration } from '@api/configuration';
-import { provideAuthenticationInterceptor } from '~/app/authentication.interceptor';
-import { provideHttpErrorInterceptor } from '~/app/http-error.interceptor';
+import { provideHttpErrorInterceptor } from '~/app/core/errors/http-error.interceptor';
+import { SecurityModule } from '~/app/core/security/security.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    SecurityModule,
     AppRoutingModule,
     ApiModule.forRoot(() => {
       return new Configuration({
@@ -25,7 +26,6 @@ import { AppComponent } from './app.component';
   ],
   providers: [
     provideHttpErrorInterceptor(),
-    provideAuthenticationInterceptor(),
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

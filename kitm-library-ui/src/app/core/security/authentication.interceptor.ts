@@ -6,22 +6,22 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable, Provider } from '@angular/core';
-import { Observable } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { AuthenticationFacade } from '~/app/core/security/authentication.facade';
 
 @Injectable()
 class AuthenticationInterceptor implements HttpInterceptor {
   intercept = (req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> => {
-    return this.authenticationFacade.token$.asObservable().pipe(
-      take(1),
+
+    return of(this.authenticationFacade.getToken()).pipe(
       switchMap(token => {
         if (req.url === '/api/public/login') {
           return next.handle(req);
         }
 
         return next.handle(req.clone({
-          headers: req.headers.set('Authorization', 'Bearer ' + token)
+          headers: req.headers.set('Authorization', 'Bearer ' + token),
         }));
       }),
     );

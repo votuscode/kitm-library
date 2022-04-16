@@ -36,16 +36,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+
     authenticationManagerBuilder.userDetailsService(authenticationUserService);
   }
 
   @Bean
   public PasswordEncoder passwordEncoder() {
+
     return new BCryptPasswordEncoder();
   }
 
   @Bean
   public CorsFilter corsFilter() {
+
     CorsConfiguration config = new CorsConfiguration();
     config.setAllowCredentials(true);
     config.addAllowedOrigin("*");
@@ -61,18 +64,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   @Bean
   public AuthenticationManager authenticationManagerBean() throws Exception {
+
     return super.authenticationManagerBean();
   }
 
   @Override
   public void configure(WebSecurity web) {
+
     web
         .ignoring()
         .antMatchers("/ui/**")
         .antMatchers(
             HttpMethod.GET,
-            "/**/*.png",
-            "/favicon.ico"
+            "/assets/**/*.png",
+            "/assets/**/*.svg",
+            "/assets/favicon.ico"
         );
   }
 }

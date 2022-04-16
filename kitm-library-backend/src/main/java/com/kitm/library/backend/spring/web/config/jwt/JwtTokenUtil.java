@@ -3,6 +3,7 @@ package com.kitm.library.backend.spring.web.config.jwt;
 import com.kitm.library.backend.domain.user.UserEntity;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.util.Date;
  * @version 1.0
  * @since 12.02.22
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtTokenUtil {
@@ -27,6 +29,7 @@ public class JwtTokenUtil {
   private String jwtExpiration;
 
   public String generateAccessToken(UserEntity userEntity) {
+
     return Jwts.builder()
         .setSubject(String.format("%s,%s", userEntity.getId(), userEntity.getUsername()))
         .setIssuer(jwtIssuer)
@@ -37,6 +40,7 @@ public class JwtTokenUtil {
   }
 
   public String getUserId(String token) {
+
     Claims claims = Jwts.parser()
         .setSigningKey(jwtSecret)
         .parseClaimsJws(token)
@@ -46,6 +50,7 @@ public class JwtTokenUtil {
   }
 
   public String getUsername(String token) {
+
     Claims claims = Jwts.parser()
         .setSigningKey(jwtSecret)
         .parseClaimsJws(token)
@@ -55,6 +60,7 @@ public class JwtTokenUtil {
   }
 
   public Date getExpirationDate(String token) {
+
     Claims claims = Jwts.parser()
         .setSigningKey(jwtSecret)
         .parseClaimsJws(token)
@@ -64,20 +70,22 @@ public class JwtTokenUtil {
   }
 
   public boolean validate(String token) {
+
     try {
       Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
       return true;
     } catch (SignatureException ex) {
-//      log.error("Invalid JWT signature - {}", ex.getMessage());
+      log.error("Invalid JWT signature - {}", ex.getMessage());
     } catch (MalformedJwtException ex) {
-//      log.error("Invalid JWT token - {}", ex.getMessage());
+      log.error("Invalid JWT token - {}", ex.getMessage());
     } catch (ExpiredJwtException ex) {
-//      log.error("Expired JWT token - {}", ex.getMessage());
+      log.error("Expired JWT token - {}", ex.getMessage());
     } catch (UnsupportedJwtException ex) {
-//      log.error("Unsupported JWT token - {}", ex.getMessage());
+      log.error("Unsupported JWT token - {}", ex.getMessage());
     } catch (IllegalArgumentException ex) {
-//      log.error("JWT claims string is empty - {}", ex.getMessage());
+      log.error("JWT claims string is empty - {}", ex.getMessage());
     }
+
     return false;
   }
 }
