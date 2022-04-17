@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@api/api/authentication.service';
+import { UserDto } from '@api/model/userDto';
 import { BehaviorSubject, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { ToastService } from '~/app/toast.service';
+import { environment } from '~/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationFacade {
-  readonly username$ = new BehaviorSubject<string>('Not logged in');
+  readonly user$ = new BehaviorSubject<UserDto | undefined>(undefined);
 
   constructor(readonly authenticationService: AuthenticationService, readonly toastService: ToastService, readonly router: Router) {
   }
@@ -17,7 +19,7 @@ export class AuthenticationFacade {
 
     this.authenticationService.authenticated().pipe(
       switchMap(() => {
-        return of(this.router.navigate(['/']));
+        return of(this.router.navigateByUrl('/'));
       }),
     ).subscribe();
   };
@@ -39,15 +41,18 @@ export class AuthenticationFacade {
   authenticated = () => {
     return this.authenticationService.authenticated().pipe(
       tap(authenticatedDto => {
-        this.username$.next(authenticatedDto.username);
+        this.user$.next(authenticatedDto.user);
       }),
       map(() => true),
-      catchError(() => of(false)),
+      catchError(() => {
+        this.logout();
+        return of(false);
+      }),
     );
   };
 
   logout = () => {
     localStorage.removeItem('token');
-    void this.router.navigate(['/login']);
+    window.location.assign(environment.login);
   };
 }

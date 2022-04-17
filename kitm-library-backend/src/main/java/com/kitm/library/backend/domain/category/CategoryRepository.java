@@ -1,4 +1,4 @@
-package com.kitm.library.backend.admin.category;
+package com.kitm.library.backend.domain.category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

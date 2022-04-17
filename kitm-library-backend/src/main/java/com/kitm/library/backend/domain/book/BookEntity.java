@@ -1,7 +1,8 @@
-package com.kitm.library.backend.admin.book;
+package com.kitm.library.backend.domain.book;
 
-import com.kitm.library.backend.admin.author.AuthorEntity;
-import com.kitm.library.backend.admin.category.CategoryEntity;
+import com.kitm.library.backend.domain.author.AuthorEntity;
+import com.kitm.library.backend.domain.category.CategoryEntity;
+import com.kitm.library.backend.domain.order.OrderEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,7 +14,6 @@ import java.util.UUID;
  * @since 10.04.22
  */
 @Entity
-@Table(name = "book")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -42,6 +42,12 @@ public class BookEntity {
   @Column
   private String image;
 
+  @Column(name = "author_id", nullable = false, insertable = false, updatable = false)
+  private UUID authorId;
+
+  @Column(name = "category_id", nullable = false, insertable = false, updatable = false)
+  private UUID categoryId;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "author_id", nullable = false)
   private AuthorEntity authorEntity;
@@ -49,4 +55,7 @@ public class BookEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "category_id", nullable = false)
   private CategoryEntity categoryEntity;
+
+  @OneToOne(mappedBy = "bookEntity", fetch = FetchType.LAZY)
+  private OrderEntity orderEntity;
 }

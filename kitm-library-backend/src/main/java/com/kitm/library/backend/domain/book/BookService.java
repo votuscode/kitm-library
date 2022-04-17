@@ -1,18 +1,20 @@
-package com.kitm.library.backend.admin.book;
+package com.kitm.library.backend.domain.book;
 
 import com.kitm.library.api.book.IBookService;
 import com.kitm.library.api.book.dto.BookDto;
 import com.kitm.library.api.book.dto.UpsertBookDto;
-import com.kitm.library.backend.admin.author.AuthorEntity;
-import com.kitm.library.backend.admin.author.AuthorRepository;
-import com.kitm.library.backend.admin.category.CategoryEntity;
-import com.kitm.library.backend.admin.category.CategoryRepository;
+import com.kitm.library.backend.domain.author.AuthorEntity;
+import com.kitm.library.backend.domain.author.AuthorRepository;
+import com.kitm.library.backend.domain.category.CategoryEntity;
+import com.kitm.library.backend.domain.category.CategoryRepository;
+import com.kitm.library.backend.domain.order.OrderEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -110,6 +112,10 @@ public class BookService implements IBookService {
 
   private BookDto convert(BookEntity bookEntity) {
 
+    final UUID orderId = Optional.ofNullable(bookEntity.getOrderEntity())
+        .map(OrderEntity::getId)
+        .orElse(null);
+
     return BookDto.builder()
         .id(bookEntity.getId())
         .name(bookEntity.getName())
@@ -117,8 +123,9 @@ public class BookService implements IBookService {
         .pages(bookEntity.getPages())
         .isbn(bookEntity.getIsbn())
         .image(bookEntity.getImage())
-        .authorId(bookEntity.getAuthorEntity().getId())
-        .categoryId(bookEntity.getCategoryEntity().getId())
+        .authorId(bookEntity.getAuthorId())
+        .categoryId(bookEntity.getCategoryId())
+        .orderId(orderId)
         .build();
   }
 }

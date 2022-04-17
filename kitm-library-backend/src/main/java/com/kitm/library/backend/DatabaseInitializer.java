@@ -3,15 +3,19 @@ package com.kitm.library.backend;
 import com.google.common.collect.ImmutableSet;
 import com.kitm.library.api.author.dto.AuthorDto;
 import com.kitm.library.api.author.dto.UpsertAuthorDto;
+import com.kitm.library.api.book.dto.BookDto;
 import com.kitm.library.api.book.dto.UpsertBookDto;
 import com.kitm.library.api.category.dto.CategoryDto;
 import com.kitm.library.api.category.dto.UpsertCategoryDto;
+import com.kitm.library.api.order.dto.CreateOrderDto;
 import com.kitm.library.api.role.IRoleService;
 import com.kitm.library.api.role.dto.CreateRoleDto;
 import com.kitm.library.api.user.dto.CreateUserDto;
-import com.kitm.library.backend.admin.author.AuthorService;
-import com.kitm.library.backend.admin.book.BookService;
-import com.kitm.library.backend.admin.category.CategoryService;
+import com.kitm.library.api.user.dto.UserDto;
+import com.kitm.library.backend.domain.author.AuthorService;
+import com.kitm.library.backend.domain.book.BookService;
+import com.kitm.library.backend.domain.category.CategoryService;
+import com.kitm.library.backend.domain.order.OrderService;
 import com.kitm.library.backend.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +25,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -43,6 +46,8 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
 
   private final BookService bookService;
 
+  private final OrderService orderService;
+
   @Value("${admin.password}")
   private String adminPassword;
 
@@ -57,27 +62,6 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
 
     roleService.createOne(CreateRoleDto.builder()
         .name("USER")
-        .build());
-  }
-
-  private void createUsers() {
-
-    userService.createOne(CreateUserDto.builder()
-        .username("admin")
-        .name("John Doe")
-        .email("john.doe@mail.com")
-        .passwordOriginal(adminPassword)
-        .passwordConfirmation(adminPassword)
-        .roles(ImmutableSet.of("ADMIN", "USER"))
-        .build());
-
-    userService.createOne(CreateUserDto.builder()
-        .username("diego")
-        .name("Diego del Morao")
-        .email("diego.del.morao@mail.com")
-        .passwordOriginal(userPassword)
-        .passwordConfirmation(userPassword)
-        .roles(ImmutableSet.of("USER"))
         .build());
   }
 
@@ -118,7 +102,23 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
 
     createRoles();
 
-    createUsers();
+    userService.createOne(CreateUserDto.builder()
+        .username("admin")
+        .name("John Doe")
+        .email("john.doe@mail.com")
+        .passwordOriginal(adminPassword)
+        .passwordConfirmation(adminPassword)
+        .roles(ImmutableSet.of("ADMIN", "USER"))
+        .build());
+
+    final UserDto userDto = userService.createOne(CreateUserDto.builder()
+        .username("diego")
+        .name("Diego del Morao")
+        .email("diego.del.morao@mail.com")
+        .passwordOriginal(userPassword)
+        .passwordConfirmation(userPassword)
+        .roles(ImmutableSet.of("USER"))
+        .build());
 
     final CategoryDto categoryDto = categoryService.createOne(UpsertCategoryDto.builder()
         .name("Programming")
@@ -130,7 +130,7 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
         .description("Colloquially called Uncle Bob, is an American software engineer, instructor, and best-selling author. He is most recognized for developing many software design principles and for being a founder of the influential Agile Manifesto.")
         .build());
 
-    bookService.createOne(UpsertBookDto.builder()
+    final BookDto bookDto = bookService.createOne(UpsertBookDto.builder()
         .name("Clean Code: A Handbook of Agile Software Craftsmanship")
         .description("Even bad code can function. But if code isn't clean, it can bring a development organization to its knees. Every year, countless hours and significant resources are lost because of poorly written code. But it doesn't have to be that way.")
         .pages(464)
@@ -171,5 +171,10 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
         .build());
 
     createGeneric();
+
+    orderService.createOne(CreateOrderDto.builder()
+        .bookId(bookDto.getId())
+        .userId(userDto.getId())
+        .build());
   }
 }

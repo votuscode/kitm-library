@@ -1,5 +1,10 @@
 package com.kitm.library.api.order.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
@@ -8,6 +13,10 @@ import java.util.UUID;
  * @version 1.0
  * @since 17.04.22
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CreateOrderDto {
 
   @NotNull

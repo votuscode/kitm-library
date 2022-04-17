@@ -6,9 +6,11 @@ import com.kitm.library.api.user.dto.UserDto;
 import com.kitm.library.backend.domain.role.RoleEntity;
 import com.kitm.library.backend.domain.role.RoleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import javax.validation.ValidationException;
 import java.util.Collection;
@@ -72,7 +74,19 @@ public class UserService implements IUserService {
     return convert(userRepository.save(userEntity));
   }
 
-  private UserDto convert(UserEntity userEntity) {
+  @Override
+  public UserDto getAuthenticatedUser(Authentication authentication) {
+
+    final UserEntity userEntity = (UserEntity) authentication.getPrincipal();
+
+    userRepository.findById(userEntity.getId())
+        .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+    return convert(userEntity);
+  }
+
+  public UserDto convert(UserEntity userEntity) {
+
     return UserDto.builder()
         .id(userEntity.getId())
         .name(userEntity.getName())

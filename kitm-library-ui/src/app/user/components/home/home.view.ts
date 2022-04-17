@@ -7,6 +7,7 @@ import { changeDetection } from '~/change-detection.strategy';
 interface BookVm {
   dto: BookDto,
   link: string;
+  ordered: boolean;
 }
 
 @Component({
@@ -23,6 +24,10 @@ interface BookVm {
     .card-text {
       font-size: x-small;
     }
+
+    .book-ordered {
+      filter: opacity(0.5);
+    }
   `],
   template: `
     <app-layout>
@@ -31,7 +36,7 @@ interface BookVm {
       </div>
       <div class="row">
         <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" *ngFor="let vm of vm$ | async">
-          <div class="card mt-3" >
+          <div class="card mt-3" [ngClass]="vm.ordered ? 'book-ordered' : ''" >
             <a [routerLink]="vm.link">
               <img class="card-img-top" [src]="vm.dto.image" alt="Book">
             </a>
@@ -50,10 +55,11 @@ export class HomeView {
 
   readonly vm$ = this.bookService.getBooks().pipe(
     map(dtos => {
-      return dtos.map(dto => {
+      return dtos.map((dto): BookVm => {
         return {
           dto,
           link: `/books/${dto.id}`,
+          ordered: Boolean(dto.orderId)
         };
       });
     }),

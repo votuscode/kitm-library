@@ -1,9 +1,8 @@
-package com.kitm.library.backend.admin.category;
+package com.kitm.library.backend.domain.category;
 
 import com.kitm.library.api.category.ICategoryService;
 import com.kitm.library.api.category.dto.CategoryDto;
 import com.kitm.library.api.category.dto.UpsertCategoryDto;
-import com.kitm.library.backend.admin.author.AuthorEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

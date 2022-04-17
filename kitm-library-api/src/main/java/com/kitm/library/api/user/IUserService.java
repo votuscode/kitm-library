@@ -2,6 +2,7 @@ package com.kitm.library.api.user;
 
 import com.kitm.library.api.user.dto.CreateUserDto;
 import com.kitm.library.api.user.dto.UserDto;
+import org.springframework.security.core.Authentication;
 
 import java.util.Collection;
 
@@ -15,4 +16,6 @@ public interface IUserService {
   Collection<UserDto> findAll();
 
   UserDto createOne(CreateUserDto createUserDto);
+
+  UserDto getAuthenticatedUser(Authentication authentication);
 }

@@ -1,5 +1,6 @@
 package com.kitm.library.api.authentication.dto;
 
+import com.kitm.library.api.user.dto.UserDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -22,5 +23,5 @@ public class AuthenticatedDto {
   private Date expires;
 
   @NotNull
-  private String username;
+  private UserDto user;
 }

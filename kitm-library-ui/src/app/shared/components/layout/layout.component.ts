@@ -29,15 +29,16 @@ import { changeDetection } from '~/change-detection.strategy';
             <ng-content select="[widget]"></ng-content>
           </div>
           <div class="d-flex ms-1">
-            <div class="dropdown">
+            <div class="dropdown" *ngIf="authenticationFacade.user$ | async as user">
               <button class="dropdown-toggle btn btn-outline-secondary" href="#" id="navbarDropdown"
                       type="button"
                       data-bs-toggle="dropdown" aria-expanded="false">
-                👤 {{ authenticationFacade.username$ | async }}
+                👤 {{ user.username }}
               </button>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <a class="dropdown-item" routerLink="/orders">Orders</a>
+                </li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>

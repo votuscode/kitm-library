@@ -1,8 +1,8 @@
-package com.kitm.library.backend.admin.book;
+package com.kitm.library.backend.domain.book;
 
-import com.kitm.library.backend.admin.author.AuthorService;
+import com.kitm.library.backend.domain.author.AuthorService;
 import com.kitm.library.backend.admin.book.dto.BookDetailDto;
-import com.kitm.library.backend.admin.category.CategoryService;
+import com.kitm.library.backend.domain.category.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

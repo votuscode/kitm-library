@@ -1,4 +1,4 @@
-package com.kitm.library.backend.admin.author;
+package com.kitm.library.backend.domain.author;
 
 import com.kitm.library.api.author.IAuthorService;
 import com.kitm.library.api.author.dto.AuthorDto;

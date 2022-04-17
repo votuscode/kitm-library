@@ -19,7 +19,7 @@ public class OrderDto {
   private UUID id;
 
   @NotNull
-  private String name;
+  private UUID userId;
 
   @NotNull
   private UUID bookId;

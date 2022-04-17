@@ -2,9 +2,12 @@ package com.kitm.library.api.order;
 
 import com.kitm.library.api.order.dto.CreateOrderDto;
 import com.kitm.library.api.order.dto.OrderDto;
+import com.kitm.library.api.user.IUserService;
+import com.kitm.library.api.user.dto.UserDto;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,20 +27,25 @@ public class OrderRestController {
 
   private final IOrderService orderService;
 
-  @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Collection<OrderDto> getOrdersByUserId(@PathVariable("userId") UUID userId) {
-
-    return orderService.findAllByUserId(userId);
-  }
+  private final IUserService userService;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public OrderDto createOne(@RequestBody @Valid CreateOrderDto createOrderDto) {
+  public Collection<OrderDto> getOrders(Authentication authentication) {
+
+    final UserDto userDto = userService.getAuthenticatedUser(authentication);
+
+    return orderService.findAllByUserId(userDto.getId());
+  }
+
+  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public OrderDto createOrder(@RequestBody @Valid CreateOrderDto createOrderDto) {
 
     return orderService.createOne(createOrderDto);
   }
 
-  @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public void deleteOne(@PathVariable("userId") UUID orderId) {
+  // TODO: @DeleteMapping produces incorrect Swagger definitions
+  @PostMapping(value = "/{orderId}")
+  public void deleteOrder(@PathVariable("orderId") UUID orderId) {
 
     orderService.deleteOne(orderId);
   }
