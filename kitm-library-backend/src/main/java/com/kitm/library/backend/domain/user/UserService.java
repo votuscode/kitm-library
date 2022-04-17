@@ -85,6 +85,13 @@ public class UserService implements IUserService {
     return convert(userEntity);
   }
 
+  @Override
+  public boolean isUsernameExist(String username) {
+
+    return userRepository.findUserEntityByUsername(username)
+        .isPresent();
+  }
+
   public UserDto convert(UserEntity userEntity) {
 
     return UserDto.builder()

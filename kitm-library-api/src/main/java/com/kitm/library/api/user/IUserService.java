@@ -18,4 +18,6 @@ public interface IUserService {
   UserDto createOne(CreateUserDto createUserDto);
 
   UserDto getAuthenticatedUser(Authentication authentication);
+
+  boolean isUsernameExist(String username);
 }
