@@ -76,7 +76,7 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
 
     final List<AuthorDto> authors = IntStream.range(1, 9)
         .mapToObj(index -> authorService.createOne(UpsertAuthorDto.builder()
-            .name("Category #" + index)
+            .name("Author #" + index)
             .description("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident, veritatis.")
             .build()))
         .toList();
