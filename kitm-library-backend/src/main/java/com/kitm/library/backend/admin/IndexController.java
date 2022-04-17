@@ -1,15 +1,13 @@
 package com.kitm.library.backend.admin;
 
-import com.kitm.library.api.authentication.dto.AuthenticatedDto;
 import com.kitm.library.backend.domain.authentication.AuthenticationService;
 import com.kitm.library.backend.domain.user.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author votuscode (https://github.com/votuscode)
@@ -22,6 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class IndexController {
 
   private final AuthenticationService authenticationService;
+
+  @Value("${ui.redirect}")
+  private String uiRedirect;
 
   @GetMapping("/login")
   public String login() {
@@ -43,15 +44,14 @@ public class IndexController {
     }
 
     if (userEntity.hasRole("USER")) {
-//      return "redirect:/ui/redirect?token=" + authenticationService.convert(authentication).getToken();
-      return "redirect:http://localhost:4200/redirect?token=" + authenticationService.convert(authentication).getToken();
+      return "redirect:" + uiRedirect + "/redirect?token=" + authenticationService.convert(authentication).getToken();
     }
 
     return "redirect:/login";
   }
 
   @GetMapping("/sw-debug.js")
-  public String unknown(Authentication authentication) {
+  public String unknown() {
 
     log.info("root");
 
