@@ -37,6 +37,12 @@ public class OrderRestController {
     return orderService.findAllByUserId(userDto.getId());
   }
 
+  @GetMapping(value = "/{orderId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public OrderDto getOrder(@PathVariable("orderId") UUID orderId) {
+
+    return orderService.getOne(orderId);
+  }
+
   @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public OrderDto createOrder(@RequestBody @Valid CreateOrderDto createOrderDto) {
 

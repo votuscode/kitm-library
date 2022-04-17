@@ -15,6 +15,8 @@ public interface IOrderService {
 
   Collection<OrderDto> findAllByUserId(UUID userId);
 
+  OrderDto getOne(UUID orderId);
+
   OrderDto createOne(CreateOrderDto createOrderDto);
 
   void deleteOne(UUID orderId);

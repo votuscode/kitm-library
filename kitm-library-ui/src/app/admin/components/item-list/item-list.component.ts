@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { AsyncData } from '~/app/shared/util/async-data';
 import { changeDetection } from '~/change-detection.strategy';
-
-export type AsyncData<T> = T | null | undefined;
 
 export interface ItemListOptions<T> {
   mapper: (data: T) => ListItem;

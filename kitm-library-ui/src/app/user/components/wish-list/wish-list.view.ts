@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthorService } from '@api/api/author.service';
 import { BookService } from '@api/api/book.service';
 import { CategoryService } from '@api/api/category.service';
-import { OrderService } from '@api/api/order.service';
+import { WishService } from '@api/api/wish.service';
 import { forkJoin } from 'rxjs';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { AuthenticationFacade } from '~/app/core/security/authentication.facade';
@@ -19,26 +19,26 @@ import { changeDetection } from '~/change-detection.strategy';
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
                (input)="search(searchInput.value)" #searchInput>
       </div>
-      <h2>Orders page</h2>
-      <p>Here you can see your orders.</p>
+      <h2>Wish list</h2>
+      <p>Here you can see your wish list.</p>
       <app-book-list [vms]="vm$ | async"></app-book-list>
     </app-layout>
   `,
   changeDetection,
 })
-export class OrdersView {
+export class WishListView {
 
-  readonly vm$ = this.orderService.getOrders().pipe(
+  readonly vm$ = this.wishService.getWishes().pipe(
     withLatestFrom(this.authenticationFacade.user$),
-    switchMap(([orders, user]) => {
-      return forkJoin(orders.map(order => this.bookService.getBook(order.bookId))).pipe(
+    switchMap(([wishes, user]) => {
+      return forkJoin(wishes.map(wish => this.bookService.getBook(wish.bookId))).pipe(
         map((books): BookVm[] => {
           const bookMap = asMap(books);
 
-          return orders.map(order => {
-            const book = bookMap[order.bookId];
-            const link = `/books/${order.bookId}`;
-            const ordered = order.userId !== user?.id;
+          return wishes.map(wish => {
+            const book = bookMap[wish.bookId];
+            const link = `/books/${wish.bookId}`;
+            const ordered = Boolean(book.orderId);
 
             return { book, link, ordered };
           });
@@ -52,7 +52,7 @@ export class OrdersView {
     readonly bookService: BookService,
     readonly authorService: AuthorService,
     readonly categoryService: CategoryService,
-    readonly orderService: OrderService,
+    readonly wishService: WishService,
     readonly authenticationFacade: AuthenticationFacade,
     readonly toastService: ToastService,
   ) {

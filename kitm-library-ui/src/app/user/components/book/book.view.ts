@@ -4,11 +4,12 @@ import { AuthorService } from '@api/api/author.service';
 import { BookService } from '@api/api/book.service';
 import { CategoryService } from '@api/api/category.service';
 import { OrderService } from '@api/api/order.service';
+import { WishService } from '@api/api/wish.service';
 import { AuthorDto } from '@api/model/authorDto';
 import { BookDto } from '@api/model/bookDto';
 import { CategoryDto } from '@api/model/categoryDto';
 import { forkJoin, of } from 'rxjs';
-import { filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { AuthenticationFacade } from '~/app/core/security/authentication.facade';
 import { ToastService } from '~/app/toast.service';
 import { changeDetection } from '~/change-detection.strategy';
@@ -17,6 +18,8 @@ interface BookVm {
   book: BookDto;
   author: AuthorDto;
   category: CategoryDto;
+  canReturn: boolean;
+  inWishList: boolean;
 }
 
 @Component({
@@ -35,6 +38,7 @@ interface BookVm {
           <p>
             <span class="badge bg-secondary">{{ vm.author.name }}</span>
             <span class="badge bg-primary ms-1">{{ vm.category.name }}</span>
+            <span *ngIf="vm.inWishList" class="badge bg-success">Wish list</span>
           </p>
           <p class="card-text">{{ vm.book.description }}</p>
           <p>
@@ -42,14 +46,19 @@ interface BookVm {
               <button class="btn btn-outline-success" type="button" (click)="order(vm.book.id)">
                 🛍 Order
               </button>
-              <button class="btn btn-outline-success ms-1" type="button">
-                💝 Wish list
-              </button>
             </ng-template>
             <ng-container *ngIf="vm.book.orderId; else available">
-              <button class="btn btn-outline-warning" type="button" (click)="release(vm.book.orderId)">
-                👍 Return
-              </button>
+              <ng-template #add>
+                <button class="btn btn-outline-success" type="button" [disabled]="vm.inWishList"
+                        (click)="wish(vm.book.id)">
+                  💝 Wish list
+                </button>
+              </ng-template>
+              <ng-container *ngIf="vm.canReturn; else add">
+                <button class="btn btn-outline-warning" type="button" (click)="release(vm.book.orderId)">
+                  👍 Return
+                </button>
+              </ng-container>
             </ng-container>
           </p>
         </div>
@@ -60,11 +69,24 @@ interface BookVm {
 })
 export class BookView {
 
+  getOrder = (orderId?: string) => {
+    return orderId ? this.orderService.getOrder(orderId) : of(null);
+  };
+
   readonly vm$ = this.bookService.getBook(this.route.snapshot.params.bookId).pipe(
-    switchMap(book => {
-      return forkJoin([this.authorService.getAuthor(book.authorId), this.categoryService.getCategory(book.categoryId)]).pipe(
-        map(([author, category]): BookVm => {
-          return { book, author, category };
+    withLatestFrom(this.authenticationFacade.user$),
+    switchMap(([book, user]) => {
+      return forkJoin([
+        this.wishService.getWishes(),
+        this.authorService.getAuthor(book.authorId),
+        this.categoryService.getCategory(book.categoryId),
+        this.getOrder(book.orderId),
+      ]).pipe(
+        map(([wishes, author, category, order]): BookVm => {
+          const canReturn = order?.userId === user?.id;
+          const inWishList = wishes.find(wish => wish.bookId === book.id) !== undefined;
+
+          return { book, author, category, canReturn, inWishList };
         }),
       );
     }),
@@ -76,6 +98,7 @@ export class BookView {
     readonly authorService: AuthorService,
     readonly categoryService: CategoryService,
     readonly orderService: OrderService,
+    readonly wishService: WishService,
     readonly authenticationFacade: AuthenticationFacade,
     readonly toastService: ToastService,
     readonly router: Router,
@@ -83,9 +106,9 @@ export class BookView {
   }
 
   order = (bookId: string) => {
-    of(bookId).pipe(
+    this.wishService.getWishes().pipe(
       withLatestFrom(this.authenticationFacade.user$),
-      switchMap(([bookId, user]) => {
+      switchMap(([wishes, user]) => {
         if (!user) {
           throw new Error('Not logged in');
         }
@@ -94,6 +117,10 @@ export class BookView {
           tap(orderDto => {
             this.toastService.success(`Order ${orderDto.id} completed.`);
             void this.router.navigateByUrl('orders');
+          }),
+          switchMap(() => {
+            const wish = wishes.find(wish => wish.bookId === bookId);
+            return wish ? this.wishService.deleteWish(wish.id) : of(null);
           }),
         );
       }),
@@ -105,6 +132,24 @@ export class BookView {
       tap(() => {
         this.toastService.success(`Thank you for reading the book.`);
         void this.router.navigateByUrl('orders');
+      }),
+    ).subscribe();
+  };
+
+  wish = (bookId: string) => {
+    of(bookId).pipe(
+      withLatestFrom(this.authenticationFacade.user$),
+      switchMap(([bookId, user]) => {
+        if (!user) {
+          throw new Error('Not logged in');
+        }
+
+        return this.wishService.createWish({ userId: user.id, bookId }).pipe(
+          tap(() => {
+            this.toastService.success(`Book is added to your wish list.`);
+            void this.router.navigateByUrl('wish-list');
+          }),
+        );
       }),
     ).subscribe();
   };

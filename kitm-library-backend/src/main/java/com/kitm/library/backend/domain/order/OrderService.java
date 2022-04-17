@@ -8,6 +8,7 @@ import com.kitm.library.backend.domain.book.BookRepository;
 import com.kitm.library.backend.domain.user.UserEntity;
 import com.kitm.library.backend.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -41,6 +42,15 @@ public class OrderService implements IOrderService {
         .filter(orderEntity -> orderEntity.getUserEntity().getId().equals(userId))
         .map(this::convert)
         .toList();
+  }
+
+  @Override
+  public OrderDto getOne(UUID orderId) {
+
+    final OrderEntity orderEntity = orderRepository.findById(orderId)
+        .orElseThrow(() -> new EntityNotFoundException("Could not find order"));
+
+    return convert(orderEntity);
   }
 
   @Override

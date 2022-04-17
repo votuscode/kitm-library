@@ -3,6 +3,7 @@ package com.kitm.library.backend.domain.book;
 import com.kitm.library.backend.domain.author.AuthorEntity;
 import com.kitm.library.backend.domain.category.CategoryEntity;
 import com.kitm.library.backend.domain.order.OrderEntity;
+import com.kitm.library.backend.domain.wish.WishEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -58,4 +59,7 @@ public class BookEntity {
 
   @OneToOne(mappedBy = "bookEntity", fetch = FetchType.LAZY)
   private OrderEntity orderEntity;
+
+  @OneToOne(mappedBy = "bookEntity", fetch = FetchType.LAZY)
+  private WishEntity wishEntity;
 }

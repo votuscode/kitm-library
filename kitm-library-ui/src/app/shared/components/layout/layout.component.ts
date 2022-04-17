@@ -40,6 +40,9 @@ import { changeDetection } from '~/change-detection.strategy';
                   <a class="dropdown-item" routerLink="/orders">Orders</a>
                 </li>
                 <li>
+                  <a class="dropdown-item" routerLink="/wish-list">Wish list</a>
+                </li>
+                <li>
                   <hr class="dropdown-divider">
                 </li>
                 <!-- Logout button -->

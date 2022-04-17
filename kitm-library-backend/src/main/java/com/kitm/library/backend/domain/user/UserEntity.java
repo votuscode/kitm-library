@@ -2,6 +2,7 @@ package com.kitm.library.backend.domain.user;
 
 import com.kitm.library.backend.domain.order.OrderEntity;
 import com.kitm.library.backend.domain.role.RoleEntity;
+import com.kitm.library.backend.domain.wish.WishEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -46,6 +47,9 @@ public class UserEntity implements Serializable, UserDetails {
 
   @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Set<OrderEntity> orderEntitySet = new HashSet<>();
+
+  @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private Set<WishEntity> wishEntitySet = new HashSet<>();
 
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)

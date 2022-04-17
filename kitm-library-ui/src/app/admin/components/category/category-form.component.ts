@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { CategoryDto } from '@api/model/categoryDto';
-import { AsyncData } from '~/app/admin/components/item-list/item-list.component';
+import { AsyncData } from '~/app/shared/util/async-data';
 import { changeDetection } from '~/change-detection.strategy';
 
 @Component({
