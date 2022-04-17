@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@api/api/authentication.service';
-import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, of } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { ToastService } from '~/app/toast.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationFacade {
+  readonly username$ = new BehaviorSubject<string>('Not logged in');
+
   constructor(readonly authenticationService: AuthenticationService, readonly toastService: ToastService, readonly router: Router) {
   }
 
@@ -36,6 +38,9 @@ export class AuthenticationFacade {
 
   authenticated = () => {
     return this.authenticationService.authenticated().pipe(
+      tap(authenticatedDto => {
+        this.username$.next(authenticatedDto.username);
+      }),
       map(() => true),
       catchError(() => of(false)),
     );

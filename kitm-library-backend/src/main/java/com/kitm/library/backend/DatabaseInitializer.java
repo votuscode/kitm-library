@@ -19,6 +19,11 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 /**
  * @author votuscode (https://github.com/votuscode)
  * @version 1.0
@@ -44,8 +49,7 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
   @Value("${user.password}")
   private String userPassword;
 
-  @Override
-  public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
+  private void createRoles() {
 
     roleService.createOne(CreateRoleDto.builder()
         .name("ADMIN")
@@ -54,6 +58,9 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
     roleService.createOne(CreateRoleDto.builder()
         .name("USER")
         .build());
+  }
+
+  private void createUsers() {
 
     userService.createOne(CreateUserDto.builder()
         .username("admin")
@@ -72,6 +79,46 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
         .passwordConfirmation(userPassword)
         .roles(ImmutableSet.of("USER"))
         .build());
+  }
+
+  private void createGeneric() {
+
+    final List<CategoryDto> categories = IntStream.range(1, 9)
+        .mapToObj(index -> categoryService.createOne(UpsertCategoryDto.builder()
+            .name("Category #" + index)
+            .description("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident, veritatis.")
+            .build()))
+        .toList();
+
+    final List<AuthorDto> authors = IntStream.range(1, 9)
+        .mapToObj(index -> authorService.createOne(UpsertAuthorDto.builder()
+            .name("Category #" + index)
+            .description("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident, veritatis.")
+            .build()))
+        .toList();
+
+    IntStream.range(11, 99).forEach(index -> {
+      final UUID authorId = authors.get(index / 13).getId();
+      final UUID categoryId = categories.get(index % 7).getId();
+
+      bookService.createOne(UpsertBookDto.builder()
+          .name("Book #" + index)
+          .description("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident, veritatis.")
+          .pages(index * 9)
+          .isbn("555-01234567" + index)
+          .image("data:image/jpeg;base64,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")
+          .categoryId(categoryId)
+          .authorId(authorId)
+          .build());
+    });
+  }
+
+  @Override
+  public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
+
+    createRoles();
+
+    createUsers();
 
     final CategoryDto categoryDto = categoryService.createOne(UpsertCategoryDto.builder()
         .name("Programming")
@@ -122,5 +169,7 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
         .categoryId(categoryDto.getId())
         .authorId(authorDto.getId())
         .build());
+
+    createGeneric();
   }
 }

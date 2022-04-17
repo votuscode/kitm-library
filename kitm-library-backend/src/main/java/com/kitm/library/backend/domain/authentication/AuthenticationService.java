@@ -46,6 +46,7 @@ public class AuthenticationService implements IAuthenticationService {
     return AuthenticatedDto.builder()
         .token(token)
         .expires(expires)
+        .username(userEntity.getUsername())
         .build();
   }
 }
