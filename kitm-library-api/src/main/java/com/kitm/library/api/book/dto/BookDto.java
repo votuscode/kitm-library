@@ -35,4 +35,7 @@ public class BookDto implements IGenericDto {
 
   @NotNull
   private UUID categoryId;
+
+  // optional
+  private UUID orderId;
 }

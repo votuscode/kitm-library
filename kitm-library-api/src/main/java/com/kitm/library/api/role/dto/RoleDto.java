@@ -1,5 +1,6 @@
 package com.kitm.library.api.role.dto;
 
+import com.kitm.library.api.common.IGenericDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
  */
 @Data
 @Builder
-public class RoleDto {
+public class RoleDto implements IGenericDto {
 
   @NotNull
   private UUID id;

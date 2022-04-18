@@ -19,7 +19,7 @@
     <img src="/assets/kitm-logo.png" class="card-img-top" alt="KITM">
     <div class="card-body">
       <h5 class="card-title">KITM Library</h5>
-      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident, veritatis.</p>
+      <p class="card-text">Please use this form to login.</p>
       <div class="alert alert-danger" role="alert" th:if="${param.error}">
         Could not login, please check your credentials and try again.
       </div>
@@ -29,13 +29,14 @@
       <form method="post" th:action="@{/login}">
         <div class="form-group mb-3">
           <label for="username">Username</label>
-          <input name="username" type="text" class="form-control" id="username" placeholder="Username" required>
+          <input th:value="${param.username}" name="username" type="text" class="form-control" id="username" placeholder="Username" required>
         </div>
         <div class="form-group mb-3">
           <label for="password">Password</label>
           <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
+        <a type="button" class="btn btn-success" th:href="@{/register}">Register</a>
       </form>
     </div>
   </div>

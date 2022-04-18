@@ -1,8 +1,7 @@
-package com.kitm.library.backend.admin;
+package com.kitm.library.backend.admin.role;
 
-import com.kitm.library.api.user.dto.CreateUserDto;
+import com.kitm.library.api.role.dto.CreateRoleDto;
 import com.kitm.library.backend.domain.role.RoleService;
-import com.kitm.library.backend.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,29 +16,27 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @Controller
 @RequiredArgsConstructor
-public class UsersController {
+public class RolesController {
 
   private final RoleService roleService;
 
-  private final UserService userService;
-
-  @GetMapping("/admin/users")
+  @GetMapping("/admin/roles")
   public String rolesList(Model model) {
-    model.addAttribute("roles", roleService.findAll());
-    model.addAttribute("users", userService.findAll());
-    model.addAttribute("createUserDto", new CreateUserDto());
 
-    return "users";
+    model.addAttribute("roles", roleService.findAll());
+    model.addAttribute("createRoleDto", new CreateRoleDto());
+
+    return "roles";
   }
 
-  @PostMapping("/admin/users")
-  public String addRole(@ModelAttribute CreateUserDto createUserDto, Model model) {
-    userService.createOne(createUserDto);
+  @PostMapping("/admin/roles")
+  public String addRole(@ModelAttribute CreateRoleDto createRoleDto, Model model) {
+
+    roleService.createOne(createRoleDto);
 
     model.addAttribute("roles", roleService.findAll());
-    model.addAttribute("users", userService.findAll());
-    model.addAttribute("createUserDto", new CreateUserDto());
+    model.addAttribute("createRoleDto", new CreateRoleDto());
 
-    return "users";
+    return "roles";
   }
 }

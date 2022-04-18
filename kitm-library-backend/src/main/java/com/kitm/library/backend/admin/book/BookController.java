@@ -1,8 +1,10 @@
 package com.kitm.library.backend.admin.book;
 
-import com.kitm.library.backend.admin.author.AuthorService;
+import com.kitm.library.backend.domain.book.BookDetailService;
+import com.kitm.library.backend.domain.book.BookService;
+import com.kitm.library.backend.domain.author.AuthorService;
 import com.kitm.library.backend.admin.book.dto.SubmitBookFormDto;
-import com.kitm.library.backend.admin.category.CategoryService;
+import com.kitm.library.backend.domain.category.CategoryService;
 import com.kitm.library.backend.admin.common.models.Form;
 import com.kitm.library.backend.admin.common.models.ItemList;
 import com.kitm.library.backend.admin.common.models.Layout;

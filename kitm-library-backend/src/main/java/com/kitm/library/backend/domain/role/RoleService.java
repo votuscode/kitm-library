@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author votuscode (https://github.com/votuscode)
@@ -22,7 +22,7 @@ public class RoleService implements IRoleService {
   private final RoleRepository roleRepository;
 
   @Override
-  public List<RoleDto> findAll() {
+  public Collection<RoleDto> findAll() {
     return roleRepository.findAll().stream()
         .map(this::convert)
         .toList();

@@ -12,7 +12,7 @@ export class ToastService {
     const alert = Object.assign(document.createElement<any>('sl-alert'), {
       type,
       closable: true,
-      duration: duration,
+      duration,
       innerHTML: `
         <sl-icon name="${icon}" slot="icon"></sl-icon>
         <strong>${escapeHtml(header)}</strong><br>

@@ -3,7 +3,9 @@ package com.kitm.library.backend.domain.authentication;
 import com.kitm.library.api.authentication.IAuthenticationService;
 import com.kitm.library.api.authentication.dto.AuthenticatedDto;
 import com.kitm.library.api.authentication.dto.LoginDto;
+import com.kitm.library.api.user.dto.UserDto;
 import com.kitm.library.backend.domain.user.UserEntity;
+import com.kitm.library.backend.domain.user.UserService;
 import com.kitm.library.backend.spring.web.config.jwt.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,6 +28,8 @@ public class AuthenticationService implements IAuthenticationService {
 
   private final JwtTokenUtil jwtTokenUtil;
 
+  private final UserService userService;
+
   @Override
   public AuthenticatedDto login(LoginDto loginDto) {
 
@@ -46,6 +50,7 @@ public class AuthenticationService implements IAuthenticationService {
     return AuthenticatedDto.builder()
         .token(token)
         .expires(expires)
+        .user(userService.convert(userEntity))
         .build();
   }
 }

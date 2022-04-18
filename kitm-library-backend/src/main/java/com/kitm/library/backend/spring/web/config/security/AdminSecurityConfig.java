@@ -31,6 +31,7 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
+
     http
         .formLogin()
         .loginPage("/login")
@@ -46,7 +47,7 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
         .key(jwtSecret)
         .and()
         .authorizeRequests()
-        .antMatchers("/login", "/403", "/404", "/500").permitAll()
+        .antMatchers("/login", "/register", "/403", "/404", "/500").permitAll()
         .anyRequest().authenticated();
   }
 

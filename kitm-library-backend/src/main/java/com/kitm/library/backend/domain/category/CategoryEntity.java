@@ -1,14 +1,12 @@
 package com.kitm.library.backend.domain.category;
 
 import com.kitm.library.backend.domain.book.BookEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.repository.Query;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author votuscode (https://github.com/votuscode)
@@ -16,10 +14,10 @@ import java.util.*;
  * @since 10.04.22
  */
 @Entity
-@Table(name = "category")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 public class CategoryEntity {
 
@@ -34,6 +32,6 @@ public class CategoryEntity {
   @Column(nullable = false)
   private String description;
 
-  @OneToMany(mappedBy = "categoryEntity")
+  @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   private Set<BookEntity> bookEntitySet = new HashSet<>();
 }

@@ -1,10 +1,7 @@
 package com.kitm.library.backend.domain.author;
 
 import com.kitm.library.backend.domain.book.BookEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.*;
@@ -15,10 +12,11 @@ import java.util.*;
  * @since 10.04.22
  */
 @Entity
-@Table(name = "author")
+@Table
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 public class AuthorEntity {
 
@@ -33,6 +31,6 @@ public class AuthorEntity {
   @Column(nullable = false)
   private String description;
 
-  @OneToMany(mappedBy = "authorEntity", orphanRemoval = true, fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "authorEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   private Set<BookEntity> bookEntitySet = new HashSet<>();
 }

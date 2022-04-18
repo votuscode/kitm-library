@@ -12,20 +12,10 @@ import { RoleDto } from '@api/model/roleDto';
 import { UserDto } from '@api/model/userDto';
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
+import { asMap } from '~/app/shared/util/as-map';
 import { ToastService } from '~/app/toast.service';
 
 const next = <T>(subject: BehaviorSubject<T>) => tap((data: T) => subject.next(data));
-
-const fromEntries = <T>(entries: Array<[string, T]>): Record<string, T> => {
-  return entries.reduce((acc, [key, value]) => {
-    acc[key] = value;
-    return acc;
-  }, {} as Record<string, T>);
-};
-
-const asMap = <T extends { id: string }>(items: T[]): Record<string, T> => {
-  return fromEntries(items.map(item => [item.id, item]));
-};
 
 export interface BookVm extends BookDto {
   relations: {

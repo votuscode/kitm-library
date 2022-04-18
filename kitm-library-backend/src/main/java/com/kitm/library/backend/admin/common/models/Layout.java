@@ -25,7 +25,6 @@ public class Layout {
   @AllArgsConstructor
   public enum Pages {
     Home("Home", "/admin"),
-    Roles("Edit roles", "/admin/roles"),
     Users("Edit users", "/admin/users"),
     Authors("Edit authors", "/admin/authors"),
     Categories("Edit categories", "/admin/categories"),

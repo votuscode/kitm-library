@@ -42,7 +42,7 @@ class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
         if (err.status === 403) {
-          void this.router.navigate(['/login']);
+          void this.router.navigateByUrl('/login');
           return throwError(err);
         }
 

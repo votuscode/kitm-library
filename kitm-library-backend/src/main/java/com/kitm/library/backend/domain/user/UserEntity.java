@@ -1,6 +1,8 @@
 package com.kitm.library.backend.domain.user;
 
+import com.kitm.library.backend.domain.order.OrderEntity;
 import com.kitm.library.backend.domain.role.RoleEntity;
+import com.kitm.library.backend.domain.wish.WishEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -9,9 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author votuscode (https://github.com/votuscode)
@@ -19,10 +19,10 @@ import java.util.UUID;
  * @since 20.09.21
  */
 @Entity
-@Table(name = "user")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 public class UserEntity implements Serializable, UserDetails {
 
@@ -45,6 +45,12 @@ public class UserEntity implements Serializable, UserDetails {
 
   @ManyToMany(fetch = FetchType.EAGER)
   private Collection<RoleEntity> roles;
+
+  @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private Set<OrderEntity> orderEntitySet = new HashSet<>();
+
+  @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private Set<WishEntity> wishEntitySet = new HashSet<>();
 
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)

@@ -2,17 +2,19 @@ package com.kitm.library.backend.domain.book;
 
 import com.kitm.library.api.book.IBookService;
 import com.kitm.library.api.book.dto.BookDto;
-import com.kitm.library.api.book.dto.CreateBookDto;
+import com.kitm.library.api.book.dto.UpsertBookDto;
 import com.kitm.library.backend.domain.author.AuthorEntity;
 import com.kitm.library.backend.domain.author.AuthorRepository;
 import com.kitm.library.backend.domain.category.CategoryEntity;
 import com.kitm.library.backend.domain.category.CategoryRepository;
+import com.kitm.library.backend.domain.order.OrderEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -50,22 +52,22 @@ public class BookService implements IBookService {
   }
 
   @Override
-  public BookDto createOne(CreateBookDto createBookDto) {
+  public BookDto createOne(UpsertBookDto upsertBookDto) {
 
     final CategoryEntity categoryEntity = categoryRepository
-        .findById(createBookDto.getCategoryId())
+        .findById(upsertBookDto.getCategoryId())
         .orElseThrow(() -> new EntityNotFoundException("Could not find category"));
 
     final AuthorEntity authorEntity = authorRepository
-        .findById(createBookDto.getAuthorId())
+        .findById(upsertBookDto.getAuthorId())
         .orElseThrow(() -> new EntityNotFoundException("Could not find author"));
 
     final BookEntity bookEntity = BookEntity.builder()
-        .name(createBookDto.getName())
-        .description(createBookDto.getDescription())
-        .pages(createBookDto.getPages())
-        .isbn(createBookDto.getIsbn())
-        .image(createBookDto.getImage())
+        .name(upsertBookDto.getName())
+        .description(upsertBookDto.getDescription())
+        .pages(upsertBookDto.getPages())
+        .isbn(upsertBookDto.getIsbn())
+        .image(upsertBookDto.getImage())
         .categoryEntity(categoryEntity)
         .authorEntity(authorEntity)
         .build();
@@ -75,7 +77,44 @@ public class BookService implements IBookService {
     );
   }
 
+  @Override
+  public BookDto updateOne(UUID id, UpsertBookDto upsertBookDto) {
+
+    final BookEntity bookEntity = bookRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Could not find book"));
+
+    final CategoryEntity categoryEntity = categoryRepository
+        .findById(upsertBookDto.getCategoryId())
+        .orElseThrow(() -> new EntityNotFoundException("Could not find category"));
+
+    final AuthorEntity authorEntity = authorRepository
+        .findById(upsertBookDto.getAuthorId())
+        .orElseThrow(() -> new EntityNotFoundException("Could not find author"));
+
+    bookEntity.setName(upsertBookDto.getName());
+    bookEntity.setDescription(upsertBookDto.getDescription());
+    bookEntity.setPages(upsertBookDto.getPages());
+    bookEntity.setIsbn(upsertBookDto.getIsbn());
+    bookEntity.setImage(upsertBookDto.getImage());
+    bookEntity.setCategoryEntity(categoryEntity);
+    bookEntity.setAuthorEntity(authorEntity);
+
+    return convert(
+        bookRepository.save(bookEntity)
+    );
+  }
+
+  @Override
+  public void deleteOne(UUID id) {
+
+    bookRepository.deleteById(id);
+  }
+
   private BookDto convert(BookEntity bookEntity) {
+
+    final UUID orderId = Optional.ofNullable(bookEntity.getOrderEntity())
+        .map(OrderEntity::getId)
+        .orElse(null);
 
     return BookDto.builder()
         .id(bookEntity.getId())
@@ -84,8 +123,9 @@ public class BookService implements IBookService {
         .pages(bookEntity.getPages())
         .isbn(bookEntity.getIsbn())
         .image(bookEntity.getImage())
-        .authorId(bookEntity.getAuthorEntity().getId())
-        .categoryId(bookEntity.getCategoryEntity().getId())
+        .authorId(bookEntity.getAuthorId())
+        .categoryId(bookEntity.getCategoryId())
+        .orderId(orderId)
         .build();
   }
 }
