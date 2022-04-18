@@ -15,6 +15,7 @@ import javax.transaction.Transactional;
 import javax.validation.ValidationException;
 import java.util.Collection;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -38,6 +39,15 @@ public class UserService implements IUserService {
     return userRepository.findAll().stream()
         .map(this::convert)
         .toList();
+  }
+
+  @Override
+  public UserDto getOne(UUID userId) {
+
+    final UserEntity userEntity = userRepository.findById(userId)
+        .orElseThrow(() -> new EntityNotFoundException("Could not find user"));
+
+    return convert(userEntity);
   }
 
   @Transactional
@@ -72,6 +82,36 @@ public class UserService implements IUserService {
         .build();
 
     return convert(userRepository.save(userEntity));
+  }
+
+  @Override
+  public UserDto updateOne(UUID userId, CreateUserDto createUserDto) {
+
+    final UserEntity userEntity = userRepository.findById(userId)
+        .orElseThrow(() -> new EntityNotFoundException("Could not find user"));
+
+    final Collection<RoleEntity> roles = createUserDto.getRoles().stream()
+        .map(roleName -> roleRepository.findRoleEntityByName(roleName))
+        .toList();
+
+    userEntity.setName(createUserDto.getName());
+//    userEntity.setUsername(createUserDto.getUsername());
+    userEntity.setEmail(createUserDto.getEmail());
+    userEntity.setRoles(roles);
+    userEntity.setPassword(createUserDto.getPasswordOriginal());
+
+    return convert(
+        userRepository.save(userEntity)
+    );
+  }
+
+  @Override
+  public void deleteOne(UUID userId) {
+
+    final UserEntity userEntity = userRepository.findById(userId)
+        .orElseThrow(() -> new EntityNotFoundException("Could not find user"));
+
+    userRepository.delete(userEntity);
   }
 
   @Override

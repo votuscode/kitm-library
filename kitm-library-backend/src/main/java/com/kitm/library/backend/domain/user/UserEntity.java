@@ -22,6 +22,7 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 public class UserEntity implements Serializable, UserDetails {
 
